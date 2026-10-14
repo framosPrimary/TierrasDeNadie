@@ -14,7 +14,7 @@ export function createGame(p1: CardInstance[], p2: CardInstance[]): GameState {
   return {
     currentPlayer: "P1",
     players: { P1: { id: "P1", hand: [...p1], played: 0 }, P2: { id: "P2", hand: [...p2], played: 0 } },
-    terrains: [0, 1, 2].map(() => ({ P1: [], P2: [] })) as GameState["terrains"],
+    terrains: [{ P1: [], P2: [] }, { P1: [], P2: [] }, { P1: [], P2: [] }],
     log: [],
   };
 }
