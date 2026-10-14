@@ -25,3 +25,10 @@
 
 ## Siguiente acción
 Completar M1 con GameState, tres líneas de terreno y acción `PLAY_CARD` validada.
+
+## Actualización M1
+- GameState con dos jugadores y tres terrenos.
+- PLAY_CARD puro con validación de turno, mano, encadenamiento y límite.
+- UI de prueba local 1 vs 1 con cartas dummy, selección, colocación y registro de jugadas.
+- Tests añadidos para PLAY_CARD.
+- Pendiente ejecutar tests y build en CI; no se afirma validación exitosa.
