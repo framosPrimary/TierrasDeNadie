@@ -29,3 +29,13 @@
 - [ ] Contratación de catapulta en Mercado.
 - [ ] Destrucción de cartas con efectos previos/pasivos.
 - [ ] Reglas exactas de desempate respecto de héroes y Mercado.
+
+## Avance M1 (implementación inicial)
+- [x] GameState y tres TerrainLine.
+- [x] Acción PLAY_CARD.
+- [x] Validación de turno y carta en mano.
+- [x] Inserción TOP/BOTTOM.
+- [x] Contador de cartas jugadas.
+- [x] Primera UI local con cartas de prueba.
+- [ ] Verificar build/tests en CI y corregir fallos.
+- [ ] Completar estados de ronda y turnos sin cartas legales.
