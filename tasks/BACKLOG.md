@@ -6,8 +6,8 @@
 - [x] Script de typecheck definido.
 - [x] Vitest configurado.
 - [x] CI configurada para instalar, typecheck, test y build.
-- [ ] CI ejecutada con éxito en GitHub.
-- [ ] Deploy automatizado al servidor Linux.
+- [x] CI ejecutada con éxito en GitHub (run 38488860420).
+- [ ] Despliegue manual guiado en DigitalOcean (práctica DevOps).
 
 ## M1 — Domain Core
 - [x] Tipos base de carta, jugador y posición.
@@ -24,10 +24,12 @@
 - [ ] Contador de cartas jugadas.
 
 ## Bloqueos de diseño
-- [ ] Timing exacto del Mercado.
+- [x] Timing del Mercado: cada activación de carta de oro.
 - [ ] Compra múltiple de cartas extra.
-- [ ] Contratación de catapulta en Mercado.
-- [ ] Destrucción de cartas con efectos previos/pasivos.
+- [x] Contratación de catapulta: 3 oro, efecto inmediato, elegir línea enemiga y destruir última carta.
+- [x] Destino de carta destruida: descarte.
+- [ ] Recalcular pasivos / permanencia de efectos inmediatos tras destrucción.
+- [ ] Límite de compras por activación de oro.
 - [ ] Reglas exactas de desempate respecto de héroes y Mercado.
 
 ## Avance M1 (implementación inicial)
@@ -37,5 +39,5 @@
 - [x] Inserción TOP/BOTTOM.
 - [x] Contador de cartas jugadas.
 - [x] Primera UI local con cartas de prueba.
-- [ ] Verificar build/tests en CI y corregir fallos.
+- [x] Verificar build/tests en CI y corregir fallos (run 38488860420).
 - [ ] Completar estados de ronda y turnos sin cartas legales.
