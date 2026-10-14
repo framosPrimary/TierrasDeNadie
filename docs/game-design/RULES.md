@@ -1,7 +1,7 @@
 # Tierras de Nadie — Rules
 
-> Estado: v0.3 de trabajo  
-> Fuente: video de reglas + validaciones del Director Creativo del 13/10/2026.  
+> Estado: v0.4 de trabajo  
+> Fuente: video de reglas + validaciones del Director Creativo del 13/10/2026 y definiciones del 14/10/2026.  
 > Este archivo es la fuente de verdad del comportamiento jugable. Si una regla no está definida aquí, no debe inventarse en código.
 
 ## 1. Objetivo de la partida
@@ -100,7 +100,7 @@ Las murallas son una defensa pasiva acumulativa por línea contra arquería.
 ### 7.5 Oro
 El oro se activa inmediatamente al encadenarse la carta.
 
-Puede gastarse en acciones de Mercado y puede interactuar con habilidades de héroe.
+Al activarse una carta de oro, el jugador tiene una oportunidad de utilizar el Mercado. El oro puede gastarse en acciones de Mercado y puede interactuar con habilidades de héroe.
 
 ### 7.6 Curación
 La curación se activa inmediatamente al encadenarse la carta.
@@ -115,6 +115,8 @@ La catapulta se activa inmediatamente al encadenarse.
 Elimina la última carta del oponente de la misma línea de terreno en la que fue encadenada.
 
 ## 8. Mercado
+
+**Momento de uso confirmado (14/10/2026):** el Mercado puede utilizarse cada vez que se activa una carta de oro. No se habilita por defecto en cualquier otro momento del turno.
 
 ### Coste 1 — Cambiar carta
 - pagar 1 oro;
@@ -133,17 +135,19 @@ Elimina la última carta del oponente de la misma línea de terreno en la que fu
 
 ### Coste 3 — Contratar catapulta
 - pagar 3 de oro;
-- contratar una catapulta.
+- el jugador elige una de las líneas del enemigo;
+- se elimina automáticamente la última carta de esa línea;
+- la carta destruida va al descarte.
 
-**OPEN-RULE-01:** falta definir la representación exacta de esta contratación y su momento de resolución.
+**Confirmado (14/10/2026):** el efecto de la catapulta contratada es inmediato al comprarla. **OPEN-RULE-01 (resuelta).**
 
 ### Coste 3 — Carta extra
 - pagar 3 de oro;
 - obtener una carta extra para jugar al final de la ronda.
 
-**OPEN-RULE-02:** falta definir si esta compra puede repetirse y cómo se ordenan las cartas extra de ambos jugadores.
+**OPEN-RULE-02:** coste de 3 de oro confirmado el 14/10/2026. Sigue pendiente definir si la compra puede repetirse y cómo se ordenan las cartas extra de ambos jugadores.
 
-**OPEN-RULE-03:** falta definir exactamente cuándo pueden ejecutarse acciones de Mercado dentro del turno.
+**OPEN-RULE-03 (resuelta):** el Mercado puede utilizarse cada vez que se activa una carta de oro. **Pendiente de detalle:** cantidad de compras permitidas durante una misma activación de oro y si se permite acumular oro de activaciones anteriores.
 
 ## 9. Resolución de fin de ronda
 
@@ -198,9 +202,13 @@ Si existe empate después de las 3 rondas:
 
 ## 13. Regla pendiente sobre destrucción
 
-**OPEN-RULE-05:** falta definir qué sucede al destruir una carta cuyo efecto inmediato ya se resolvió o que aporta un efecto pasivo persistente.
+**Confirmado (14/10/2026):** toda carta destruida va al descarte. **OPEN-RULE-05 (parcialmente resuelta):** sigue pendiente definir si se recalculan los efectos pasivos de la carta retirada y si un efecto inmediato ya aplicado permanece sin reversión.
 
-## 14. Principio de implementación
+## 14. Descarte
+
+Toda carta destruida pasa al descarte. Esto incluye las cartas eliminadas por catapultas contratadas en el Mercado. No se ha confirmado todavía si el descarte se mezcla nuevamente durante una ronda ni cómo se recalculan efectos pasivos al destruir una carta.
+
+## 15. Principio de implementación
 
 El código debe distinguir entre:
 
