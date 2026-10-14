@@ -226,16 +226,17 @@ No se requiere drag-and-drop en esta etapa.
 
 La build web debe poder desplegarse como sitio estático.
 
-Destino inicial recomendado: **GitHub Pages**.
+Destino de pruebas acordado: **servidor Linux de DigitalOcean del propietario** (1 vCPU, 1 GB RAM, 25 GB de disco).
 
-Así el primer prototipo puede abrirse desde una URL sin instalar nada y sin requerir backend.
+El despliegue será **manual y guiado paso a paso por el propietario**, como práctica de su curso DevOps. No se automatizará ni se accederá al servidor sin una decisión posterior. La web es un banco de pruebas; la producción objetivo es Steam y Android, con port posterior a Godot.
 
 ## 8. Próximas entradas del Director Creativo
 
-- momento exacto de uso del Mercado;
-- reglas de compra múltiple de cartas extra;
-- comportamiento exacto de la catapulta contratada;
-- comportamiento al destruir cartas con efectos previos/pasivos.
+- **Confirmado:** Mercado disponible cada vez que se activa una carta de oro.
+- **Confirmado:** carta extra cuesta 3 de oro.
+- **Confirmado:** catapulta de Mercado cuesta 3 de oro y elimina inmediatamente la última carta de una línea enemiga elegida.
+- **Confirmado:** cualquier carta destruida va al descarte.
+- **Pendiente:** compras múltiples por activación, secuencia de cartas extra, efectos pasivos tras destrucción.
 
 Después:
 - catálogo de las 50 cartas;
