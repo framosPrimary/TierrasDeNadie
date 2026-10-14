@@ -31,4 +31,15 @@ Completar M1 con GameState, tres líneas de terreno y acción `PLAY_CARD` valida
 - PLAY_CARD puro con validación de turno, mano, encadenamiento y límite.
 - UI de prueba local 1 vs 1 con cartas dummy, selección, colocación y registro de jugadas.
 - Tests añadidos para PLAY_CARD.
-- Pendiente ejecutar tests y build en CI; no se afirma validación exitosa.
+- CI verificada exitosa: GitHub Actions run 38488860420 (typecheck, test y build).
+
+## Decisiones del Director Creativo (14/10/2026)
+- Mercado habilitado cada vez que se activa una carta de oro.
+- Carta extra cuesta 3 de oro.
+- Catapulta contratada en Mercado cuesta 3 de oro y destruye inmediatamente la última carta de la línea enemiga elegida.
+- Toda carta destruida va al descarte.
+- Pendiente detallar compras múltiples, orden de cartas extra y efectos pasivos tras destrucción.
+
+## Despliegue
+- DigitalOcean se configura manualmente por el propietario, guiado paso a paso como laboratorio DevOps.
+- No se automatiza el despliegue en esta fase.
