@@ -3,12 +3,15 @@ import { overlay, type OverlayOrder } from "./overlay";
 import type { Placement, PlayerId } from "../types";
 import { nextPlayer } from "./turn";
 import { resolveImmediate } from "./immediate";
+import { updateHeroThreshold } from "./heroes";
 import type { GameState } from "./state";
 
 export type PlayCardAction = { playerId: PlayerId; instanceId: string; terrainIndex: 0 | 1 | 2; placement: Placement; overlayOrder?: OverlayOrder };
 export type PlayResult = { ok: true; state: GameState } | { ok: false; reason: string };
 
 export function playCard(state: GameState, action: PlayCardAction): PlayResult {
+  if (state.heroSelectionRequired && (!state.players.P1.hero?.revealed || !state.players.P2.hero?.revealed)) return { ok: false, reason: "Falta revelar héroes" };
+  if (state.players.P1.marketOpen || state.players.P2.marketOpen) return { ok: false, reason: "Primero cerrá el Mercado" };
   if (state.phase !== "PLAYING") return { ok: false, reason: "La ronda no está activa" };
   if (action.playerId !== state.currentPlayer) return { ok: false, reason: "No es tu turno" };
   if (![0, 1, 2].includes(action.terrainIndex)) return { ok: false, reason: "Terreno inválido" };
@@ -36,5 +39,6 @@ export function playCard(state: GameState, action: PlayCardAction): PlayResult {
       },
       log: [...state.log, `${action.playerId} jugó ${card.definition.name} en terreno ${action.terrainIndex + 1}`, ...applied.newlyEnabled.map(e => `${e.element} habilitado (${e.instanceId}:${e.face})`)],
     };
-  return { ok: true, state: resolveImmediate(placed, action.playerId, action.terrainIndex, applied.newlyEnabled) };
+  const activated = resolveImmediate(placed, action.playerId, action.terrainIndex, applied.newlyEnabled);
+  return { ok: true, state: updateHeroThreshold(activated, action.playerId) };
 }
