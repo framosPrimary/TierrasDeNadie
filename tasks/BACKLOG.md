@@ -98,3 +98,15 @@
 - [ ] Ejecutar typecheck, Vitest y build con CI/entorno clonado antes del deploy.
 - [ ] Evitar desplegar como partida reglamentaria completa: falta Mercado, compras extra, héroes, geometría definitiva y reglas de segundo empate.
 - [ ] Validar primera ronda/5 cartas/robo/selección de héroes, orden de cartas extra y fin de ronda con el Director Creativo.
+
+## Mercado y héroes (implementación parcial)
+- [x] Modelo opt-in de oferta de cuatro, elección oculta de dos, revelación conjunta del titular.
+- [x] Enroque único y suspensión persistente del suplente con mano <= 3.
+- [x] Ventana de Mercado disparada por oro y bloqueo del turno siguiente hasta cerrarla.
+- [x] Curación por 2 oro; catapulta de Mercado por 3 oro en línea enemiga elegida.
+- [x] Controles básicos de curación/catapulta/cierre en UI local.
+- [ ] Catálogo real de héroes y aplicación de habilidades.
+- [ ] Pantalla completa de oferta, selección y revelación de héroes.
+- [ ] Mercado: descartar 1/robar 1, tomar 2 al rival y elegir 1, comprar cartas extra, reglas de compra múltiple.
+- [ ] Asegurar orden de juego para cartas extra al cierre de ronda.
+- [ ] Verificar typecheck, test y build en CI; no desplegar antes.
