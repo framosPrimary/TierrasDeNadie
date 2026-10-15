@@ -28,6 +28,7 @@ export function nextRound(state: GameState, random: () => number = Math.random):
   const all = [
     ...state.deck, ...state.discard,
     ...state.players.P1.hand, ...state.players.P2.hand,
+    ...(state.players.P1.extraCards ?? []), ...(state.players.P2.extraCards ?? []),
     ...state.terrains.flatMap(t => [...t.P1, ...t.P2]),
   ].map(({ instanceId, definition }) => ({ instanceId, definition }));
   if (all.length !== 50 || new Set(all.map(c => c.instanceId)).size !== 50)
@@ -44,7 +45,7 @@ export function nextRound(state: GameState, random: () => number = Math.random):
     discard: [],
     terrains: [{ P1: [], P2: [] }, { P1: [], P2: [] }, { P1: [], P2: [] }],
     players: {
-      P1: { ...state.players.P1, hand: deal.slice(0, count), played: 0, gold: 0 },
+      P1: { ...state.players.P1, hand: deal.slice(0, count), played: 0, gold: 0, marketOpen: false, extraCards: [], hero: undefined },
       P2: { ...state.players.P2, hand: deal.slice(count, count * 2), played: 0, gold: 0 },
     },
     log: [...state.log, `Ronda ${state.round + 1}: ${count} cartas repartidas por jugador`],
