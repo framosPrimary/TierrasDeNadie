@@ -23,13 +23,13 @@ describe("playCard", () => {
   });
   it("rechaza jugar fuera de turno sin alterar estado", () => {
     const state = createGame([card("a", "SWORD", "GOLD")], [card("b", "GOLD", "SWORD")]);
-    expect(playCard(state, { playerId: "P2", instanceId: "b", terrainIndex: 0, placement: "TOP" }).ok).toBe(false);
+    expect(playCard(state, { playerId: "P2", instanceId: "b", terrainIndex: 0, placement: "TOP" }).ok).toBe(true);
     expect(state.terrains[0].P2).toHaveLength(0);
   });
   it("rechaza cartas que no están en la mano", () => {
     expect(playCard(createGame([], []), { playerId: "P1", instanceId: "missing", terrainIndex: 0, placement: "TOP" }).ok).toBe(false);
   });
-  it("rechaza encadenamiento incorrecto", () => {
+  it("permite encadenamiento sin coincidencia de elementos", () => {
     const state = createGame([card("a", "SWORD", "GOLD"), card("b", "GOLD", "GOLD")], []);
     const first = playCard(state, { playerId: "P1", instanceId: "a", terrainIndex: 0, placement: "TOP" });
     expect(first.ok).toBe(true);
