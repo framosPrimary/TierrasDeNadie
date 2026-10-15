@@ -6,6 +6,10 @@ export function finishRound(state: GameState): GameState {
   const target = state.round >= 4 ? 5 : 10;
   if (state.players.P1.played !== target || state.players.P2.played !== target)
     throw new Error("Ambos jugadores deben completar sus cartas normales");
+  if ((state.players.P1.extraCards?.length ?? 0) > 0 || (state.players.P2.extraCards?.length ?? 0) > 0)
+    throw new Error("Hay cartas extra pendientes: falta definir su orden de juego");
+  if (state.players.P1.marketOpen || state.players.P2.marketOpen)
+    throw new Error("Primero hay que cerrar el Mercado");
   const damage = resolveCombat(state);
   const players = {
     P1: { ...state.players.P1, damageReceived: state.players.P1.damageReceived + damage.total.toP1 },
