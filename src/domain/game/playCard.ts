@@ -1,9 +1,10 @@
 import { canChain } from "../rules/canChain";
+import { overlay, type OverlayOrder } from "./overlay";
 import type { Placement, PlayerId } from "../types";
 import { nextPlayer } from "./turn";
 import type { GameState } from "./state";
 
-export type PlayCardAction = { playerId: PlayerId; instanceId: string; terrainIndex: 0 | 1 | 2; placement: Placement };
+export type PlayCardAction = { playerId: PlayerId; instanceId: string; terrainIndex: 0 | 1 | 2; placement: Placement; overlayOrder?: OverlayOrder };
 export type PlayResult = { ok: true; state: GameState } | { ok: false; reason: string };
 
 export function playCard(state: GameState, action: PlayCardAction): PlayResult {
@@ -17,9 +18,10 @@ export function playCard(state: GameState, action: PlayCardAction): PlayResult {
   const chain = state.terrains[action.terrainIndex][action.playerId];
   if (!canChain(chain.map((c) => c.definition), card.definition, action.placement))
     return { ok: false, reason: "Encadenamiento inválido" };
+  const applied = overlay(chain, card, action.placement, action.overlayOrder ?? "NEW_OVER_OLD");
   const terrains = state.terrains.map((t, index) => {
     if (index !== action.terrainIndex) return t;
-    const updated = action.placement === "TOP" ? [card, ...chain] : [...chain, card];
+    const updated = applied.chain;
     return { ...t, [action.playerId]: updated };
   }) as GameState["terrains"];
   return {
@@ -32,7 +34,7 @@ export function playCard(state: GameState, action: PlayCardAction): PlayResult {
         ...state.players,
         [action.playerId]: { ...player, played: player.played + 1, hand: player.hand.filter((c) => c.instanceId !== action.instanceId) },
       },
-      log: [...state.log, `${action.playerId} jugó ${card.definition.name} en terreno ${action.terrainIndex + 1}`],
+      log: [...state.log, `${action.playerId} jugó ${card.definition.name} en terreno ${action.terrainIndex + 1}`, ...applied.newlyEnabled.map(e => `${e.element} habilitado (${e.instanceId}:${e.face}); resolución pendiente`)],
     },
   };
 }
