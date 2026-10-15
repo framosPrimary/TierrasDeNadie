@@ -61,3 +61,10 @@ Completar M1 con GameState, tres líneas de terreno y acción `PLAY_CARD` valida
 - Node 24 por NVM, build correcta y 11 tests en verde en el servidor.
 - Documentación paso a paso y próximos cuidados: `docs/operations/DEPLOYMENT.md`.
 - DevOps en **stand by**; prioridad: motor y partida completa 1v1.
+
+## Etapa 1 — superposición (trabajo iniciado 15/10/2026)
+- `canChain()` ya no requiere que símbolos de cartas coincidan.
+- Agregado `overlay.ts`: estado de tapado y activación por componente, posibilidad de elegir si tapa la nueva o la anterior, y consulta de elementos visibles.
+- `playCard` invoca overlay; UI minimalista incorpora orden de superposición y muestra un indicador para componentes tapados.
+- Nuevos tests de superposición y corrección de tests antiguos.
+- **IMPORTANTE:** no se ha verificado aún CI para el último commit. Los efectos se registran pero **no se ejecutan todavía**. El modelo de geometría es provisional y sujeto a validación con el director.
