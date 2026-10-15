@@ -28,6 +28,7 @@ export function resolveImmediate(
     switch (trigger.element) {
       case "GOLD":
         players[playerId].gold += value;
+        players[playerId].marketOpen = true;
         log.push(`${playerId}: +${value} oro; oportunidad de Mercado (interfaz pendiente)`);
         break;
       case "HEAL":
