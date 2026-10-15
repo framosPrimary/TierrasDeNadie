@@ -102,3 +102,10 @@ Completar M1 con GameState, tres líneas de terreno y acción `PLAY_CARD` valida
 - `playCard` bloquea la siguiente carta hasta cerrar la ventana de Mercado; el oro la abre al activarse. Faltan las otras compras y definir compras múltiples/retención de oro.
 - Tests añadidos para revelación, enroque, bloqueo y compras. **No afirmar CI ni build verde hasta verificarlos**.
 - Pendientes prioritarios: catalogar héroes y habilidades, añadir selección/revelación a UI, implementar intercambios y cartas extra de Mercado, resolver límite de compras, ajustar el cierre de ronda para las extras y verificar CI.
+
+## Mercado completo en acciones — 15/10/2026 (todavía no reglamentariamente cerrado)
+- `market.ts` admite las cinco acciones conocidas: descartar una y robar una (1 oro), elegir una de dos cartas rivales (2 oro), curarse dos (2 oro), catapulta de línea elegida (3 oro), reservar carta extra (3 oro).
+- La reserva extra se guarda aparte y mantiene integridad del mazo al remezclar; `finishRound` rechaza cerrar si quedan extras reservadas sin jugar. **No se implementó orden de juego de extras** porque falta especificación del director.
+- UI de prueba expone intercambiar, robar carta rival y reservar extra; para el robo rival utiliza las dos primeras cartas visibles en la prueba local: esto es una simplificación temporal, no una regla oficial ni apropiada para online.
+- Tests nuevos en `marketRemaining.test.ts`. **Aún no consta una ejecución de Vitest/typecheck/build para estos commits**.
+- Restan cerrar frecuencia de compras por activación, orden/alternancia de extras, momento de selección de cartas rivales y aplicación completa de héroes/báculos; sin esos puntos no declarar partida reglamentaria completa ni desplegar como final.
