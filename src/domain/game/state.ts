@@ -2,7 +2,7 @@ import type { CardDefinition, PlayerId } from "../types";
 import type { Visibility } from "./overlay";
 
 export type CardInstance = { instanceId: string; definition: CardDefinition; visibility?: Visibility };
-export type PlayerState = { id: PlayerId; hand: CardInstance[]; played: number; damageReceived: number; gold: number };
+export type PlayerState = { id: PlayerId; hand: CardInstance[]; played: number; damageReceived: number; gold: number; marketOpen?: boolean; hero?: { offered: string[]; selected: [string, string] | null; initial: string | null; active: string | null; reserve: string | null; revealed: boolean; swapUsed: boolean; reserveSuspended: boolean } };
 export type TerrainLine = { P1: CardInstance[]; P2: CardInstance[] };
 export type GameState = {
   currentPlayer: PlayerId;
@@ -15,6 +15,7 @@ export type GameState = {
   phase: "PLAYING" | "ROUND_FINISHED" | "GAME_FINISHED";
   winner: PlayerId | null;
   deck: CardInstance[];
+  heroSelectionRequired?: boolean;
 };
 export function createGame(p1: CardInstance[], p2: CardInstance[]): GameState {
   if (p1.length > 10 || p2.length > 10) throw new Error("Máximo 10 cartas por mano");
