@@ -54,3 +54,10 @@ Completar M1 con GameState, tres líneas de terreno y acción `PLAY_CARD` valida
 - Enroque único con suplente; al llegar a 3 cartas o menos en mano queda suspendido irrevocablemente esa ronda, aun si compra cartas.
 - Objetivo actualizado: duelo 1v1 online por invitación sin cuenta obligatoria; cuentas opcionales más adelante. Estado autoritativo en servidor.
 - **Deuda técnica:** `canChain()` y `playCard()` actualmente rechazan superposiciones sin símbolos coincidentes; corregir motor y tests antes de implementar combate.
+
+## Primer despliegue web — realizado (15/10/2026)
+- Prototipo React/Vite desplegado manualmente en DigitalOcean Ubuntu 24.04.4 LTS mediante Nginx; acceso web confirmado por propietario.
+- SSH desde Termux con usuario `fede`; UFW permite HTTP 80 conservando SSH 22 y puerto 8080 de prácticas previas.
+- Node 24 por NVM, build correcta y 11 tests en verde en el servidor.
+- Documentación paso a paso y próximos cuidados: `docs/operations/DEPLOYMENT.md`.
+- DevOps en **stand by**; prioridad: motor y partida completa 1v1.
