@@ -1,9 +1,10 @@
 import { expect, it } from "vitest";
-import { createGame } from "./state";
+import { createGame, type CardInstance } from "./state";
 import { chooseHeroes, offerHeroes, swapHero, updateHeroThreshold } from "./heroes";
 import { buyMarket, closeMarket } from "./market";
 it("keeps choices secret until both hero selections complete", () => {
-  const offered = offerHeroes(createGame([], []), ["a","b","c","d"], ["e","f","g","h"]);
+  const hand: CardInstance[] = Array.from({ length: 4 }, (_, i) => ({ instanceId: `H${i}`, definition: { id: `H${i}`, name: `Carta ${i}`, topElement: "SWORD", bottomElement: "SHIELD" } }));
+  const offered = offerHeroes(createGame(hand, []), ["a","b","c","d"], ["e","f","g","h"]);
   const one = chooseHeroes(offered, "P1", ["a", "b"], "a");
   expect(one.players.P1.hero?.revealed).toBe(false);
   expect(one.players.P2.hero?.revealed).toBe(false);
