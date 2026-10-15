@@ -2,6 +2,7 @@ import { canChain } from "../rules/canChain";
 import { overlay, type OverlayOrder } from "./overlay";
 import type { Placement, PlayerId } from "../types";
 import { nextPlayer } from "./turn";
+import { resolveImmediate } from "./immediate";
 import type { GameState } from "./state";
 
 export type PlayCardAction = { playerId: PlayerId; instanceId: string; terrainIndex: 0 | 1 | 2; placement: Placement; overlayOrder?: OverlayOrder };
@@ -24,9 +25,7 @@ export function playCard(state: GameState, action: PlayCardAction): PlayResult {
     const updated = applied.chain;
     return { ...t, [action.playerId]: updated };
   }) as GameState["terrains"];
-  return {
-    ok: true,
-    state: {
+  const placed: GameState = {
       ...state,
       terrains,
       currentPlayer: nextPlayer(state.currentPlayer),
@@ -35,6 +34,6 @@ export function playCard(state: GameState, action: PlayCardAction): PlayResult {
         [action.playerId]: { ...player, played: player.played + 1, hand: player.hand.filter((c) => c.instanceId !== action.instanceId) },
       },
       log: [...state.log, `${action.playerId} jugó ${card.definition.name} en terreno ${action.terrainIndex + 1}`, ...applied.newlyEnabled.map(e => `${e.element} habilitado (${e.instanceId}:${e.face}); resolución pendiente`)],
-    },
-  };
+    };
+  return { ok: true, state: resolveImmediate(placed, action.playerId, action.terrainIndex, applied.newlyEnabled) };
 }
