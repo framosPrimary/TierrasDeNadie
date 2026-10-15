@@ -59,3 +59,12 @@
 - [ ] Implementar actualización por releases y rollback probado.
 - [ ] HTTPS/dominio, seguridad operacional.
 - [ ] Automatizar CD cuando el gameplay esté más maduro.
+
+## Etapa 1 — estado de implementación
+- [x] Eliminar coincidencia obligatoria de símbolos y adaptar tests.
+- [x] Crear modelo provisional de componentes tapados y activaciones consumidas.
+- [x] Conectar colocación y UI con elección de orden de superposición.
+- [ ] Verificar `typecheck`, tests y build de la última rama en CI.
+- [ ] Validar geometría de superposición/destapado con ejemplos visuales del director.
+- [ ] Implementar efectos reales en motor (no solo eventos/log).
+- [ ] Determinar interacción de arquería visible y activación de nuevos arcos, con tests.
