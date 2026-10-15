@@ -68,3 +68,12 @@ Completar M1 con GameState, tres líneas de terreno y acción `PLAY_CARD` valida
 - `playCard` invoca overlay; UI minimalista incorpora orden de superposición y muestra un indicador para componentes tapados.
 - Nuevos tests de superposición y corrección de tests antiguos.
 - **IMPORTANTE:** no se ha verificado aún CI para el último commit. Los efectos se registran pero **no se ejecutan todavía**. El modelo de geometría es provisional y sujeto a validación con el director.
+
+## Avance de desarrollo — etapas 1 y 2 (15/10/2026)
+- Superposición con tapado por componente ya conectada al flujo PLAY_CARD y UI de prueba.
+- Corregidas expectativas de dos tests históricos que contradecían su descripción.
+- Agregado `src/domain/game/combat.ts`: cómputo puro de espadas/escudos visibles y defensa por línea; resultados para ambos jugadores a partir de snapshot.
+- Definiciones de cartas admiten valores explícitos `values` para los componentes. Cartas dummy sin valores se computan como cero deliberadamente.
+- Nuevos tests iniciales de cálculo; **CI del último commit pendiente de confirmar**.
+- Este cálculo aún **no se aplica a un contador de daño** ni dispara efectos: no es partida completa.
+- Pendientes: arquería, oro, curación, catapultas, báculos, efectos de héroes, final de ronda y sincronización online.
