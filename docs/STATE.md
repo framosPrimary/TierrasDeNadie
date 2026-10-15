@@ -77,3 +77,11 @@ Completar M1 con GameState, tres líneas de terreno y acción `PLAY_CARD` valida
 - Nuevos tests iniciales de cálculo; **CI del último commit pendiente de confirmar**.
 - Este cálculo aún **no se aplica a un contador de daño** ni dispara efectos: no es partida completa.
 - Pendientes: arquería, oro, curación, catapultas, báculos, efectos de héroes, final de ronda y sincronización online.
+
+## Gameplay: efectos inmediatos y resolución de ronda (15/10/2026)
+- Estado guarda oro, daño recibido, descarte y bandera de combate de ronda resuelto.
+- `immediate.ts` aplica oro y curación al jugar; arquería combina valores visibles de la línea y enfrenta murallas; catapulta elimina última carta rival de la misma línea enviándola al descarte.
+- `playCard` conecta disparadores de superposición con efectos; `finishRound` aplica combate tras 10 cartas por jugador e impide duplicarlo.
+- Se incorporaron tests de oro, curación y fin de ronda.
+- **No confirmado aún CI verde de estos commits.** Sigue siendo una implementación parcial: no hay transición automática entre rondas, catálogo real, Mercado interactivo, selección de blancos de Mercado, héroes ni red.
+- Geometría exacta de tapado/destapado y cálculo fino del combo de arquería deben contrastarse con juego físico antes de afirmar fidelidad total.
