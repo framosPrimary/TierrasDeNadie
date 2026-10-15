@@ -41,7 +41,7 @@ export function App() {
       {game.terrains.map((line, index) => <button key={index} className={"terrain " + (terrain === index ? "active" : "")} onClick={() => setTerrain(index as 0 | 1 | 2)}>
         <strong>Terreno {index + 1}</strong>
         <div>Rival: {line[player === "P1" ? "P2" : "P1"].map(c => <span className="played" key={c.instanceId}>{c.visibility?.top.covered ? "✕" : symbols[c.definition.topElement]} / {c.visibility?.bottom.covered ? "✕" : symbols[c.definition.bottomElement]}</span>)}</div>
-        <div>Propio: {line[player].map(c => <span className="played" key={c.instanceId}>{symbols[c.definition.topElement]} / {symbols[c.definition.bottomElement]}</span>)}</div>
+        <div>Propio: {line[player].map(c => <span className="played" key={c.instanceId}>{c.visibility?.top.covered ? "✕" : symbols[c.definition.topElement]} / {c.visibility?.bottom.covered ? "✕" : symbols[c.definition.bottomElement]}</span>)}</div>
       </button>)}
     </section>
     <section><h2>Mano de {player} ({hand.length})</h2><div className="hand">
