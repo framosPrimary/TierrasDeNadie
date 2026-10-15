@@ -88,3 +88,13 @@
 - [ ] Definir contratación de catapulta en Mercado con elección de línea.
 - [ ] Implementar interacción de Mercado habilitada por oro.
 - [ ] Resolver casos de arquería con varias activaciones y destapado; testear contra director.
+
+## Cierre de ciclo local / preparación previa al deploy
+- [x] Repartir 10 cartas de mazo de 50, rondas 1–3 y daño acumulado.
+- [x] Resolver fin de ronda, reiniciar cadenas y remezclar mazo único.
+- [x] Determinar ganador después de ronda 3 y reparto de 5 por jugador ante empate.
+- [x] Mostrar controles básicos de rondas y marcador en UI de prueba.
+- [x] Tests iniciales del ciclo de partida.
+- [ ] Ejecutar typecheck, Vitest y build con CI/entorno clonado antes del deploy.
+- [ ] Evitar desplegar como partida reglamentaria completa: falta Mercado, compras extra, héroes, geometría definitiva y reglas de segundo empate.
+- [ ] Validar primera ronda/5 cartas/robo/selección de héroes, orden de cartas extra y fin de ronda con el Director Creativo.
