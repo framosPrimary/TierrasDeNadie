@@ -9,11 +9,12 @@ export type PlayCardAction = { playerId: PlayerId; instanceId: string; terrainIn
 export type PlayResult = { ok: true; state: GameState } | { ok: false; reason: string };
 
 export function playCard(state: GameState, action: PlayCardAction): PlayResult {
+  if (state.phase !== "PLAYING") return { ok: false, reason: "La ronda no está activa" };
   if (action.playerId !== state.currentPlayer) return { ok: false, reason: "No es tu turno" };
   if (![0, 1, 2].includes(action.terrainIndex)) return { ok: false, reason: "Terreno inválido" };
   if (action.placement !== "TOP" && action.placement !== "BOTTOM") return { ok: false, reason: "Posición inválida" };
   const player = state.players[action.playerId];
-  if (player.played >= 10) return { ok: false, reason: "Límite de cartas de la ronda" };
+  if (player.played >= (state.round >= 4 ? 5 : 10)) return { ok: false, reason: "Límite de cartas de la ronda" };
   const card = player.hand.find((c) => c.instanceId === action.instanceId);
   if (!card) return { ok: false, reason: "Carta no disponible en la mano" };
   const chain = state.terrains[action.terrainIndex][action.playerId];
@@ -33,7 +34,7 @@ export function playCard(state: GameState, action: PlayCardAction): PlayResult {
         ...state.players,
         [action.playerId]: { ...player, played: player.played + 1, hand: player.hand.filter((c) => c.instanceId !== action.instanceId) },
       },
-      log: [...state.log, `${action.playerId} jugó ${card.definition.name} en terreno ${action.terrainIndex + 1}`, ...applied.newlyEnabled.map(e => `${e.element} habilitado (${e.instanceId}:${e.face}); resolución pendiente`)],
+      log: [...state.log, `${action.playerId} jugó ${card.definition.name} en terreno ${action.terrainIndex + 1}`, ...applied.newlyEnabled.map(e => `${e.element} habilitado (${e.instanceId}:${e.face})`)],
     };
   return { ok: true, state: resolveImmediate(placed, action.playerId, action.terrainIndex, applied.newlyEnabled) };
 }
