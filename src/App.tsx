@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { createGame, type CardInstance, type GameState } from "./domain/game/state";
 import { playCard } from "./domain/game/playCard";
+import type { OverlayOrder } from "./domain/game/overlay";
 import type { ElementType, Placement } from "./domain/types";
 
 const symbols: Record<ElementType, string> = { SWORD: "⚔️", SHIELD: "🛡️", ARCHERY: "🏹", WALL: "🧱", GOLD: "🪙", HEAL: "💚", CATAPULT: "💥" };
@@ -18,6 +19,7 @@ export function App() {
   const [selected, setSelected] = useState<string | null>(null);
   const [terrain, setTerrain] = useState<0 | 1 | 2>(0);
   const [placement, setPlacement] = useState<Placement>("TOP");
+  const [overlayOrder, setOverlayOrder] = useState<OverlayOrder>("NEW_OVER_OLD");
   const [message, setMessage] = useState("Elegí una carta y una línea para jugar.");
   const player = game.currentPlayer;
   const hand = game.players[player].hand;
@@ -25,7 +27,7 @@ export function App() {
 
   function submit() {
     if (!selected) return setMessage("Primero seleccioná una carta.");
-    const result = playCard(game, { playerId: player, instanceId: selected, terrainIndex: terrain, placement });
+    const result = playCard(game, { playerId: player, instanceId: selected, terrainIndex: terrain, placement, overlayOrder });
     if (!result.ok) return setMessage(result.reason);
     setGame(result.state);
     setSelected(null);
@@ -38,7 +40,7 @@ export function App() {
     <section className="board">
       {game.terrains.map((line, index) => <button key={index} className={"terrain " + (terrain === index ? "active" : "")} onClick={() => setTerrain(index as 0 | 1 | 2)}>
         <strong>Terreno {index + 1}</strong>
-        <div>Rival: {line[player === "P1" ? "P2" : "P1"].map(c => <span className="played" key={c.instanceId}>{symbols[c.definition.topElement]} / {symbols[c.definition.bottomElement]}</span>)}</div>
+        <div>Rival: {line[player === "P1" ? "P2" : "P1"].map(c => <span className="played" key={c.instanceId}>{c.visibility?.top.covered ? "✕" : symbols[c.definition.topElement]} / {c.visibility?.bottom.covered ? "✕" : symbols[c.definition.bottomElement]}</span>)}</div>
         <div>Propio: {line[player].map(c => <span className="played" key={c.instanceId}>{symbols[c.definition.topElement]} / {symbols[c.definition.bottomElement]}</span>)}</div>
       </button>)}
     </section>
@@ -48,7 +50,7 @@ export function App() {
       </button>)}
     </div></section>
     <section className="actions"><p>Seleccionada: {selectedCard?.definition.name ?? "ninguna"} · Terreno {terrain + 1}</p>
-      <div className="controls"><button className={placement === "TOP" ? "active" : ""} onClick={() => setPlacement("TOP")}>Arriba</button><button className={placement === "BOTTOM" ? "active" : ""} onClick={() => setPlacement("BOTTOM")}>Abajo</button><button onClick={submit}>Jugar carta</button></div>
+      <div className="controls"><button className={placement === "TOP" ? "active" : ""} onClick={() => setPlacement("TOP")}>Arriba</button><button className={placement === "BOTTOM" ? "active" : ""} onClick={() => setPlacement("BOTTOM")}>Abajo</button><button className={overlayOrder === "NEW_OVER_OLD" ? "active" : ""} onClick={() => setOverlayOrder("NEW_OVER_OLD")}>Nueva tapa</button><button className={overlayOrder === "OLD_OVER_NEW" ? "active" : ""} onClick={() => setOverlayOrder("OLD_OVER_NEW")}>Anterior tapa</button><button onClick={submit}>Jugar carta</button></div>
       <p role="status">{message}</p>
     </section>
     <section><h2>Historial</h2><ol>{game.log.slice(-8).map((entry, i) => <li key={i}>{entry}</li>)}</ol></section>
