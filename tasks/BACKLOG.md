@@ -51,3 +51,11 @@
 - [ ] Enroque de héroes una vez por ronda; bloqueo permanente si mano <=3.
 - [ ] Diseñar estado autoritativo de sala online 1v1, jugadores invitados y privacidad de manos.
 - [ ] Relevar superposición exacta, arco destapado, compra múltiple y catálogo de héroes/báculos.
+
+## DevOps / Operaciones (en pausa tras primer despliegue)
+- [x] Primer deploy manual en DigitalOcean + Nginx, acceso público verificado.
+- [x] Registrar procedimiento, diagnóstico y comandos en `docs/operations/DEPLOYMENT.md`.
+- [ ] Agregar lockfile a Git y usar `npm ci`.
+- [ ] Implementar actualización por releases y rollback probado.
+- [ ] HTTPS/dominio, seguridad operacional.
+- [ ] Automatizar CD cuando el gameplay esté más maduro.
