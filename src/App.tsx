@@ -3,6 +3,7 @@ import { type GameState } from "./domain/game/state";
 import { playCard } from "./domain/game/playCard";
 import { finishRound } from "./domain/game/finishRound";
 import { nextRound, startMatch } from "./domain/game/match";
+import { buyMarket, closeMarket } from "./domain/game/market";
 import type { OverlayOrder } from "./domain/game/overlay";
 import type { ElementType, Placement } from "./domain/types";
 
@@ -24,6 +25,7 @@ export function App() {
   const [placement, setPlacement] = useState<Placement>("TOP");
   const [overlayOrder, setOverlayOrder] = useState<OverlayOrder>("NEW_OVER_OLD");
   const [message, setMessage] = useState("Elegí una carta y una línea para jugar.");
+  const marketPlayer = game.players.P1.marketOpen ? "P1" : game.players.P2.marketOpen ? "P2" : null;
   const player = game.currentPlayer;
   const hand = game.players[player].hand;
   const selectedCard = hand.find(c => c.instanceId === selected);
@@ -37,6 +39,18 @@ export function App() {
     setMessage("Carta jugada. Turno de " + result.state.currentPlayer);
   }
 
+  function buyHeal() {
+    if (!marketPlayer) return;
+    const r = buyMarket(game, { playerId: marketPlayer, kind: "HEAL_TWO" });
+    if (r.ok) { setGame(r.state); setMessage("Curación comprada."); }
+    else setMessage(r.reason);
+  }
+  function buyCatapult() {
+    if (!marketPlayer) return;
+    const r = buyMarket(game, { playerId: marketPlayer, kind: "CATAPULT", terrainIndex: terrain });
+    if (r.ok) { setGame(r.state); setMessage("Catapulta contratada."); }
+    else setMessage(r.reason);
+  }
   function closeRound() {
     try {
       setGame(finishRound(game));
@@ -71,6 +85,7 @@ export function App() {
       <div className="controls"><button className={placement === "TOP" ? "active" : ""} onClick={() => setPlacement("TOP")}>Arriba</button><button className={placement === "BOTTOM" ? "active" : ""} onClick={() => setPlacement("BOTTOM")}>Abajo</button><button className={overlayOrder === "NEW_OVER_OLD" ? "active" : ""} onClick={() => setOverlayOrder("NEW_OVER_OLD")}>Nueva tapa</button><button className={overlayOrder === "OLD_OVER_NEW" ? "active" : ""} onClick={() => setOverlayOrder("OLD_OVER_NEW")}>Anterior tapa</button><button disabled={game.phase !== "PLAYING"} onClick={submit}>Jugar carta</button></div>
       <p role="status">{message}</p><div className="controls"><button disabled={game.phase !== "PLAYING" || game.players.P1.played !== totalCards || game.players.P2.played !== totalCards} onClick={closeRound}>Resolver ronda</button><button disabled={game.phase !== "ROUND_FINISHED"} onClick={advanceRound}>Siguiente ronda</button></div>
     </section>
+    {marketPlayer && <section className="actions"><h2>Mercado · {marketPlayer}</h2><p>Se habilitó al activar oro. Elegí una compra o cerrá el Mercado.</p><div className="controls"><button onClick={buyHeal}>Curar 2 (2 oro)</button><button onClick={buyCatapult}>Catapulta en terreno {terrain + 1} (3 oro)</button><button onClick={() => setGame(closeMarket(game, marketPlayer))}>Cerrar Mercado</button></div></section>}
     <section><h2>Historial</h2><ol>{game.log.slice(-8).map((entry, i) => <li key={i}>{entry}</li>)}</ol></section>
   </main>;
 }
