@@ -94,3 +94,11 @@ Completar M1 con GameState, tres líneas de terreno y acción `PLAY_CARD` valida
 - `App.tsx`: controles de resolver ronda / siguiente ronda y marcador de daño/ganador. Se usan cartas ficticias con valores ficticios, no el catálogo real.
 - Tests nuevos en `match.test.ts`. **No verificados localmente**: entorno de trabajo no puede descargar el repositorio por DNS; revisar GitHub Actions / ejecutar npm test y npm run build antes de desplegar.
 - **Límite deliberado:** este es un ciclo técnico local, NO una partida reglamentaria final. Faltan Mercado interactivo y cartas extra, mulligan/habilidades/enroque de héroes, activación por revelación, fuentes de daño/magia, reglas del segundo empate, orden de turnos/catálogo/otras excepciones. Por lo tanto, el botón resolver ronda solo contempla cartas normales.
+
+## Roadmap Mercado/Héroes — 15/10/2026 (implementación parcial)
+- Creado `heroes.ts`: oferta de 4 héroes identificados por ID, selección privada de 2 y titular, revelación simultánea cuando ambos confirman, enroque único y suspensión irreversible del suplente al llegar a 3 cartas en mano.
+- El flujo de héroes aún requiere catálogo y pantalla de selección; `heroSelectionRequired` es opt-in para no romper el modo demo existente.
+- Creado `market.ts`: compra validada de curación de 2 de daño por 2 oro y catapulta dirigida por 3 oro, destruyendo la última carta enemiga en la línea elegida. Interfaz de prueba muestra ambas opciones cuando el oro abre la ventana de Mercado y permite cerrarla.
+- `playCard` bloquea la siguiente carta hasta cerrar la ventana de Mercado; el oro la abre al activarse. Faltan las otras compras y definir compras múltiples/retención de oro.
+- Tests añadidos para revelación, enroque, bloqueo y compras. **No afirmar CI ni build verde hasta verificarlos**.
+- Pendientes prioritarios: catalogar héroes y habilidades, añadir selección/revelación a UI, implementar intercambios y cartas extra de Mercado, resolver límite de compras, ajustar el cierre de ronda para las extras y verificar CI.
