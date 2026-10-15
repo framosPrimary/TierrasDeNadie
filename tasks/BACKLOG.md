@@ -110,3 +110,13 @@
 - [ ] Mercado: descartar 1/robar 1, tomar 2 al rival y elegir 1, comprar cartas extra, reglas de compra múltiple.
 - [ ] Asegurar orden de juego para cartas extra al cierre de ronda.
 - [ ] Verificar typecheck, test y build en CI; no desplegar antes.
+
+## Mercado — acciones agregadas, cierre pendiente
+- [x] Implementar cinco acciones de compra con costes y cambios de estado.
+- [x] Pruebas unitarias para intercambio, elección rival y compra de extra.
+- [x] Proteger fin de ronda si queda carta extra reservada sin resolver.
+- [ ] **Bloqueo reglas:** fijar cantidad de compras en cada activación y persistencia de oro.
+- [ ] **Bloqueo reglas:** fijar orden, prioridad y repetibilidad de las cartas extra de final de ronda.
+- [ ] Conectar acción de carta extra a tablero cuando se confirme el orden.
+- [ ] Evitar exposición de mano rival en modo online; definir selección privada/aleatoria de dos cartas rivales.
+- [ ] Confirmar CI/typecheck/tests/build con ejecución real; luego despliegue manual a DigitalOcean.
