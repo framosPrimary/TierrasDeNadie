@@ -78,3 +78,13 @@
 - [ ] Integrar resultados de combate al ciclo de fin de ronda y contador de daño.
 - [ ] Ejecutar oro/curación/arquería/catapulta al encadenar según reglas.
 - [ ] Resolver geometría real de superposición, especialmente tapados de ambos lados y destapados.
+
+## Gameplay — siguiente integración
+- [x] Implementar contadores de oro/daño y descarte en estado.
+- [x] Ejecutar primeros efectos inmediatos al jugar (oro, curación, arquería y catapulta de carta).
+- [x] Agregar cierre explícito de ronda con cálculo de daño una sola vez.
+- [ ] Verificar y corregir CI de último commit antes del deploy.
+- [ ] Integrar control de fases/reparto/reinicio y desempate.
+- [ ] Definir contratación de catapulta en Mercado con elección de línea.
+- [ ] Implementar interacción de Mercado habilitada por oro.
+- [ ] Resolver casos de arquería con varias activaciones y destapado; testear contra director.
