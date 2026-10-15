@@ -85,3 +85,12 @@ Completar M1 con GameState, tres líneas de terreno y acción `PLAY_CARD` valida
 - Se incorporaron tests de oro, curación y fin de ronda.
 - **No confirmado aún CI verde de estos commits.** Sigue siendo una implementación parcial: no hay transición automática entre rondas, catálogo real, Mercado interactivo, selección de blancos de Mercado, héroes ni red.
 - Geometría exacta de tapado/destapado y cálculo fino del combo de arquería deben contrastarse con juego físico antes de afirmar fidelidad total.
+
+## Ciclo de partida local — avance 15/10/2026
+- `match.ts`: arranque con mazo compartido de **50** instancias, reparto de 10 por jugador, barajado inyectable para tests y recomposición completa del mazo en rondas siguientes.
+- `GameState`: fase `PLAYING/ROUND_FINISHED/GAME_FINISHED`, número de ronda, ganador y mazo remanente.
+- `finishRound.ts`: aplica daño de espadas una sola vez y determina ganador tras tercera ronda; empate habilita cuarta ronda de 5 cartas por jugador.
+- `playCard` respeta fase y límite de 5 cartas en desempate.
+- `App.tsx`: controles de resolver ronda / siguiente ronda y marcador de daño/ganador. Se usan cartas ficticias con valores ficticios, no el catálogo real.
+- Tests nuevos en `match.test.ts`. **No verificados localmente**: entorno de trabajo no puede descargar el repositorio por DNS; revisar GitHub Actions / ejecutar npm test y npm run build antes de desplegar.
+- **Límite deliberado:** este es un ciclo técnico local, NO una partida reglamentaria final. Faltan Mercado interactivo y cartas extra, mulligan/habilidades/enroque de héroes, activación por revelación, fuentes de daño/magia, reglas del segundo empate, orden de turnos/catálogo/otras excepciones. Por lo tanto, el botón resolver ronda solo contempla cartas normales.
