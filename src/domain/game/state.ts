@@ -11,15 +11,23 @@ export type GameState = {
   log: string[];
   discard: CardInstance[];
   roundCombatResolved: boolean;
+  round: number;
+  phase: "PLAYING" | "ROUND_FINISHED" | "GAME_FINISHED";
+  winner: PlayerId | null;
+  deck: CardInstance[];
 };
 export function createGame(p1: CardInstance[], p2: CardInstance[]): GameState {
   if (p1.length > 10 || p2.length > 10) throw new Error("Máximo 10 cartas por mano");
   return {
     currentPlayer: "P1",
-    players: { P1: { id: "P1", hand: [...p1], played: 0, damageReceived: 0, gold: 0 }, P2: { id: "P2", hand: [...p2], played: 0 } },
+    players: { P1: { id: "P1", hand: [...p1], played: 0, damageReceived: 0, gold: 0 }, P2: { id: "P2", hand: [...p2], played: 0, damageReceived: 0, gold: 0 } },
     terrains: [{ P1: [], P2: [] }, { P1: [], P2: [] }, { P1: [], P2: [] }],
     log: [],
     discard: [],
     roundCombatResolved: false,
+    round: 1,
+    phase: "PLAYING",
+    winner: null,
+    deck: [],
   };
 }
