@@ -68,3 +68,13 @@
 - [ ] Validar geometría de superposición/destapado con ejemplos visuales del director.
 - [ ] Implementar efectos reales en motor (no solo eventos/log).
 - [ ] Determinar interacción de arquería visible y activación de nuevos arcos, con tests.
+
+## Desarrollo etapas 1–2 — progreso
+- [x] Corrección de tests antiguos del encadenamiento y del turno.
+- [x] `combat.ts` calcula daño espada-escudo por línea según componentes visibles.
+- [x] Soporte para valores numéricos declarativos de componentes.
+- [x] Tests iniciales de combate y componentes tapados.
+- [ ] Comprobar CI del commit más reciente y corregir fallos de existir.
+- [ ] Integrar resultados de combate al ciclo de fin de ronda y contador de daño.
+- [ ] Ejecutar oro/curación/arquería/catapulta al encadenar según reglas.
+- [ ] Resolver geometría real de superposición, especialmente tapados de ambos lados y destapados.
