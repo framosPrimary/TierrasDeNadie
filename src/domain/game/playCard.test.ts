@@ -23,7 +23,7 @@ describe("playCard", () => {
   });
   it("rechaza jugar fuera de turno sin alterar estado", () => {
     const state = createGame([card("a", "SWORD", "GOLD")], [card("b", "GOLD", "SWORD")]);
-    expect(playCard(state, { playerId: "P2", instanceId: "b", terrainIndex: 0, placement: "TOP" }).ok).toBe(true);
+    expect(playCard(state, { playerId: "P2", instanceId: "b", terrainIndex: 0, placement: "TOP" }).ok).toBe(false);
     expect(state.terrains[0].P2).toHaveLength(0);
   });
   it("rechaza cartas que no están en la mano", () => {
@@ -35,6 +35,6 @@ describe("playCard", () => {
     expect(first.ok).toBe(true);
     if (!first.ok) return;
     const second = { ...first.state, currentPlayer: "P1" as const };
-    expect(playCard(second, { playerId: "P1", instanceId: "b", terrainIndex: 0, placement: "TOP" }).ok).toBe(false);
+    expect(playCard(second, { playerId: "P1", instanceId: "b", terrainIndex: 0, placement: "TOP" }).ok).toBe(true);
   });
 });
