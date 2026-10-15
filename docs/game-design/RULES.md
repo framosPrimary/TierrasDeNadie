@@ -1,6 +1,6 @@
 # Tierras de Nadie — Rules
 
-> Estado: v0.4 de trabajo  
+> Estado: v0.5 de trabajo  
 > Fuente: video de reglas + validaciones del Director Creativo del 13/10/2026 y definiciones del 14/10/2026.  
 > Este archivo es la fuente de verdad del comportamiento jugable. Si una regla no está definida aquí, no debe inventarse en código.
 
@@ -55,13 +55,13 @@ Cada carta posee:
 - un elemento superior;
 - un elemento inferior.
 
-Una carta puede encadenarse cuando el elemento superior de una carta coincide con el elemento inferior de otra.
+Una carta puede encadenarse por superposición sin exigir coincidencia (ver §16).
 
 La nueva carta puede colocarse:
 - por encima de una carta ya jugada;
 - por debajo de una carta ya jugada;
 
-siempre que el enlace entre elemento superior e inferior sea válido.
+La superposición determina qué elemento queda tapado o habilitado; no hay incompatibilidad por símbolos (ver §16).
 
 ## 6. Turno
 
@@ -70,8 +70,8 @@ Los jugadores alternan turnos.
 En un turno normal:
 1. el jugador activo juega exactamente 1 carta;
 2. elige una de las 3 líneas;
-3. elige una posición legal en la cadena;
-4. valida el encadenamiento;
+3. elige la posición y superposición de componentes;
+4. determina cuáles quedan tapados y cuáles habilitados;
 5. coloca la carta;
 6. resuelve los efectos inmediatos de esa carta;
 7. termina el turno;
@@ -219,3 +219,56 @@ El código debe distinguir entre:
 - **evento**: algo que ocurrió y puede disparar otros efectos.
 
 No debe codificarse comportamiento no documentado en este archivo.
+
+
+## 16. Encadenamiento por superposición — corrección confirmada
+
+**Esta sección sustituye la restricción de coincidencia de elementos descrita anteriormente en §5.** Una carta siempre puede encadenarse; no es necesario que los símbolos enfrentados coincidan. El jugador decide la superposición: qué componente tapa al otro y cuál queda descubierto. La táctica depende de qué elemento permanece habilitado, no de una incompatibilidad que prohíba jugar.
+
+Ejemplo confirmado: carta nueva con espada arriba y oro abajo, sobre una carta con escudo arriba y arquería abajo:
+- Si el oro tapa al escudo, el oro queda habilitado y puede abrir una oportunidad de Mercado; el escudo queda inactivo.
+- Si el oro queda debajo del escudo, el escudo conserva su contribución defensiva y la espada de la carta nueva puede aportar ataque.
+
+**Elementos tapados:** un componente tapado deja de contar para su acción. Si ambos componentes de una carta quedan tapados, la carta queda desactivada mientras continúe así; puede recuperar componentes vigentes si se destapan (por ejemplo tras destruir otras cartas). El fin de ronda resetea el tablero.
+
+### Activaciones y visibilidad
+- **De activación única por ronda y por componente:** oro, catapultas, curación y efectos de báculos mágicos. Se disparan solo cuando quedan habilitados al encadenarse; si posteriormente se tapan y destapan, **no vuelven a dispararse**.
+- **Arquería:** excepción de combo. Si se encadena un nuevo arco en una línea con otro arco vigente, se suma su valor al del arco ya presente: arco 1 + arco 2 = 3 de daño de arquería en esa acción. Los arcos tapados dejan de contar en la suma. No se debe tratar el mero destapado como repetición automática de oro, curación, catapulta o báculo.
+- **Espadas y escudos:** su contribución vigente se calcula al cierre de la ronda, considerando únicamente componentes destapados.
+
+**Punto de implementación a precisar:** geometría exacta de las superposiciones y disparadores de arquería al destapar un arco sin encadenar uno nuevo; no inventar esta regla.
+
+## 17. Resolución de espada de fin de ronda — ratificada
+
+En cada una de las 3 líneas, para ambos jugadores de manera independiente:
+```text
+dañoDeA_a_B = max(0, espadasVisiblesA + modificadoresAplicablesA - escudosVisiblesB)
+dañoDeB_a_A = max(0, espadasVisiblesB + modificadoresAplicablesB - escudosVisiblesA)
+```
+Las habilidades de héroes y báculos pueden modificar el ataque; sus fórmulas y orden particular requieren catálogo detallado. Calcular el combate al final de la ronda, no cada vez que se encadena una espada.
+
+## 18. Selección, revelación y enroque de héroes — confirmadas
+
+1. Primero se reparten **10 cartas** a cada jugador desde el mazo común.
+2. Cada jugador conoce su mano antes de seleccionar sus héroes. De **4 héroes ofrecidos**, elige **2**.
+3. Entre esos 2, elige un **héroe inicial** y deja el otro como **suplente**.
+4. La elección inicial se mantiene oculta hasta que ambos jugadores eligen; entonces los héroes iniciales se **revelan simultáneamente**, sin que nadie aproveche conocer primero la selección rival.
+5. Cada jugador puede realizar **un solo enroque** durante la ronda entre héroe activo y suplente, mientras siga habilitado.
+6. En cuanto la mano del jugador llega a **3 cartas o menos**, su suplente queda **suspendido para lo que reste de la ronda**; ya no puede realizar el enroque, incluso si más tarde compra cartas extra en Mercado.
+7. Si ya utilizó su único enroque, no puede repetirlo. Si al llegar al umbral ya había intercambiado, el héroe que esté activo en ese momento permanece activo.
+
+Para el servidor online, las selecciones se guardan de forma privada y solo se publican juntas al completar ambas confirmaciones. Contar el tamaño de la mano y mantener un indicador persistente de suspensión; **no** inferir disponibilidad únicamente de la cantidad de cartas jugadas.
+
+## 19. Objetivo de modalidad online
+
+La experiencia objetivo es **duelo 1 contra 1 online** desde dispositivos separados, con posibilidad de jugar **como invitado sin cuenta** y, a futuro, cuenta opcional. La validación del estado y las jugadas debe ser autoritativa en servidor y no enviar la mano privada de un jugador al rival. El prototipo web local sigue sirviendo de banco de pruebas. Un bot básico podrá ser un controlador alternativo para testear partidas completas.
+
+## 20. Pendientes que aún requieren precisión
+
+- Qué geometrías exactas de superposición se ofrecen en cada extremo/interior de la cadena.
+- Qué ocurre si se destapa un arco sin encadenar un nuevo arco; distinguir valoración visible de daño inmediato ya ejecutado.
+- Catálogo completo de cartas, héroes y efectos de báculos; timings y modificadores precisos.
+- Cómo se combinan límites de mano y compras de cartas extras; cantidad de compras por activación de oro.
+- Desempate (héroes, Mercado, cartas extra), orden de cartas extra y reglas de primer jugador.
+
+Estas dudas **no** autorizan al código a imponer coincidencia de símbolos para encadenar.
