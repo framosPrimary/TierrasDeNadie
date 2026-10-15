@@ -1,5 +1,5 @@
 import { expect, it } from "vitest";
-import { startMatch, nextRound } from "./match";
+import { startMatch } from "./match";
 import { buyMarket } from "./market";
 import { finishRound } from "./finishRound";
 import type { CardDefinition } from "../types";
@@ -37,10 +37,7 @@ it("reserves an extra card without playing it ahead of its end-of-round phase",(
   expect(r.state.players.P1.hand).toHaveLength(10);
   expect(r.state.players.P1.played).toBe(0);
   const ready={...r.state,players:{...r.state.players,P1:{...r.state.players.P1,played:10},P2:{...r.state.players.P2,played:10}}};
-  const resolved=finishRound(ready);
-  const next=nextRound(resolved,()=>0.5);
-  expect(next.players.P1.extraCards).toHaveLength(0);
-  expect(next.deck).toHaveLength(30);
+  expect(()=>finishRound(ready)).toThrow(/cartas extra pendientes/);
 });
 it("refuses absent rival targets without spending gold",()=>{
   const s=setup();
