@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { createGame, type CardInstance } from "./state";
 import { playCard } from "./playCard";
+import { closeMarket } from "./market";
 
 const card = (id: string, top: "SWORD" | "GOLD", bottom: "SWORD" | "GOLD"): CardInstance => ({
   instanceId: id, definition: { id, name: id, topElement: top, bottomElement: bottom },
@@ -34,7 +35,8 @@ describe("playCard", () => {
     const first = playCard(state, { playerId: "P1", instanceId: "a", terrainIndex: 0, placement: "TOP" });
     expect(first.ok).toBe(true);
     if (!first.ok) return;
-    const second = { ...first.state, currentPlayer: "P1" as const };
+    // GOLD abrió Mercado: cerrar esa ventana antes de validar el encadenamiento.
+    const second = { ...closeMarket(first.state, "P1"), currentPlayer: "P1" as const };
     expect(playCard(second, { playerId: "P1", instanceId: "b", terrainIndex: 0, placement: "TOP" }).ok).toBe(true);
   });
 });
