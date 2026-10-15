@@ -41,3 +41,13 @@
 - [x] Primera UI local con cartas de prueba.
 - [x] Verificar build/tests en CI y corregir fallos (run 38488860420).
 - [ ] Completar estados de ronda y turnos sin cartas legales.
+
+## Nuevas prioridades — relevamiento 15/10/2026
+- [ ] **P0** Eliminar restricción de igualdad de símbolos en `canChain()` / `playCard()` y modelar superposición y visibilidad por componente, con tests.
+- [ ] Separar activación única consumida de vigencia/visibilidad del elemento.
+- [ ] Implementar combo de arquería en una misma línea usando arcos vigentes.
+- [ ] Resolver espadas/escudos visibles y modificadores por línea al cierre.
+- [ ] Implementar fases: repartir 10 → ofrecer 4 héroes → elegir 2 → elegir inicial → revelación simultánea.
+- [ ] Enroque de héroes una vez por ronda; bloqueo permanente si mano <=3.
+- [ ] Diseñar estado autoritativo de sala online 1v1, jugadores invitados y privacidad de manos.
+- [ ] Relevar superposición exacta, arco destapado, compra múltiple y catálogo de héroes/báculos.
