@@ -1,6 +1,7 @@
 import type { CardDefinition, PlayerId } from "../types";
+import type { Visibility } from "./overlay";
 
-export type CardInstance = { instanceId: string; definition: CardDefinition };
+export type CardInstance = { instanceId: string; definition: CardDefinition; visibility?: Visibility };
 export type PlayerState = { id: PlayerId; hand: CardInstance[]; played: number };
 export type TerrainLine = { P1: CardInstance[]; P2: CardInstance[] };
 export type GameState = {
