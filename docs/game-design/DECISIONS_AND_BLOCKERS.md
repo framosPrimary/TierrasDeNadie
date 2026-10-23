@@ -35,3 +35,9 @@ Fuente: cuestionario respondido por el Profe (34 respuestas, octubre 2026) y acu
 - Cada nuevo problema se registra aquí con origen, efecto, gravedad y fecha de resolución.
 - Bloqueos reales interrumpen la función afectada; se puede continuar trabajo independiente.
 - Agrupar preguntas al cierre de cada hito en revisión; tras respuesta, convertirlas a pruebas.
+
+## Seguimiento H1 (23/10/2026)
+- H1-A IMPLEMENTADO: la primera carta de cada cadena deja únicamente la cara inferior activa; el elemento superior queda tapado por el terreno. Pruebas actualizadas. Confirmación Q01.
+- H1-B BLOQUEANTE para destapado fiel: el modelo actual conserva bits de visibilidad por carta y al destruir una carta simplemente la extrae del array. No reconstruye qué vecino tapaba qué elemento. Para implementar destapado correcto se necesitan ejemplos visuales de una cadena con destrucción de carta interior y de la última carta. No inventar reglas espaciales ni marcar H1 completo.
+- H1-C PENDIENTE de catálogo: Q01 menciona muralla visible aun en la primera carta; el modelo actual solo registra dos caras, no representa muralla impresa como componente adicional independiente. Requiere imágenes de cartas.
+- H1-D EXISTENTE: arquería/murallas por línea y orden de activación top antes que bottom en colocaciones posteriores, pendientes de casos de prueba adicionales y catálogo.
