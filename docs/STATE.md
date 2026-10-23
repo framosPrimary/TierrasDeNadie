@@ -109,3 +109,11 @@ Completar M1 con GameState, tres líneas de terreno y acción `PLAY_CARD` valida
 - UI de prueba expone intercambiar, robar carta rival y reservar extra; para el robo rival utiliza las dos primeras cartas visibles en la prueba local: esto es una simplificación temporal, no una regla oficial ni apropiada para online.
 - Tests nuevos en `marketRemaining.test.ts`. **Aún no consta una ejecución de Vitest/typecheck/build para estos commits**.
 - Restan cerrar frecuencia de compras por activación, orden/alternancia de extras, momento de selección de cartas rivales y aplicación completa de héroes/báculos; sin esos puntos no declarar partida reglamentaria completa ni desplegar como final.
+
+## Plan de versión v0.7 Alpha — 22/10/2026
+- Recibidas 34 respuestas del Profe; consolidación en `docs/game-design/RULES.md` §21–23. Las addendas corrigen errores previos sobre carta extra y devolución de 2 cartas en intercambio.
+- Roadmap de versión y criterios por hito: `docs/development/ROADMAP_NEXT_VERSION.md`.
+- Registro de decisiones, inconsistencias y bloqueos: `docs/game-design/DECISIONS_AND_BLOCKERS.md`.
+- Flujo acordado: implementar por hitos, registrar preguntas; detener funciones bloqueadas, continuar las independientes; revisión agrupada al final; CI verde, revisión/aprobación y después despliegue manual guiado por el propietario.
+- El prototipo actual NO equivale aún al reglamento completo. Los catálogos finales de cartas/héroes/báculos no fueron recibidos.
+- No se ha desplegado ni alterado el Droplet en esta actualización. No afirmar tests nuevos ejecutados.
