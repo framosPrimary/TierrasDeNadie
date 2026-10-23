@@ -120,3 +120,14 @@
 - [ ] Conectar acción de carta extra a tablero cuando se confirme el orden.
 - [ ] Evitar exposición de mano rival en modo online; definir selección privada/aleatoria de dos cartas rivales.
 - [ ] Confirmar CI/typecheck/tests/build con ejecución real; luego despliegue manual a DigitalOcean.
+
+## Próximo corte: v0.7 Alpha de partida local — plan aprobado 22/10/2026
+Documento fuente de alcance y criterios: `docs/development/ROADMAP_NEXT_VERSION.md`.
+- [ ] H0: corregir baseline CI (typecheck, tests, build) y cerrar contradicciones documentales.
+- [ ] H1: primer encadenamiento bajo terreno, tapados, efectos persistentes y catapultas sin reacomodo.
+- [ ] H2: Mercado repetible, intercambio 2↔2, compra/jugada inmediata de extras, mazo sin reciclaje.
+- [ ] H3: tres rondas, desempate, iniciativa, secretos y selección/enroque de héroes.
+- [ ] H4: partida completa local verificable, revisión de dudas con el Profe, aprobación y CI verde.
+- [ ] Actualizar `docs/game-design/DECISIONS_AND_BLOCKERS.md` al encontrar nuevos casos.
+- [ ] No iniciar deploy sin versión aprobada; despliegue manual posterior con usuario operador.
+- [ ] Corregir deuda técnica histórica: código que reserva cartas extras para el final y Mercado que devuelve una sola carta no refleja la especificación actual.
