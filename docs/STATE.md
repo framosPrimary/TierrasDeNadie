@@ -117,3 +117,8 @@ Completar M1 con GameState, tres líneas de terreno y acción `PLAY_CARD` valida
 - Flujo acordado: implementar por hitos, registrar preguntas; detener funciones bloqueadas, continuar las independientes; revisión agrupada al final; CI verde, revisión/aprobación y después despliegue manual guiado por el propietario.
 - El prototipo actual NO equivale aún al reglamento completo. Los catálogos finales de cartas/héroes/báculos no fueron recibidos.
 - No se ha desplegado ni alterado el Droplet en esta actualización. No afirmar tests nuevos ejecutados.
+
+## H0 validado (23/10/2026)
+- GitHub Actions run 39878135163: success en commit d0fd791; flujo incluye typecheck, test y build.
+- Auditoría: market.ts mantiene intercambio antiguo y reserva extra; match.ts presenta estado incompleto de P2 al comenzar nueva ronda. Corregir en H2/H3.
+- No se desplegó.
