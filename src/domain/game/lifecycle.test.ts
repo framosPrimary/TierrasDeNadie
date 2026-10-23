@@ -8,13 +8,13 @@ const card = (id: string, top: "GOLD" | "HEAL" | "SWORD" | "SHIELD", bottom: "GO
   definition: { id, name: id, topElement: top, bottomElement: bottom, values: { [top]: amount } },
 });
 it("gains gold once on play", () => {
-  const s = createGame([card("g", "GOLD", "SWORD", 2)], []);
+  const s = createGame([card("g", "GOLD", "GOLD", 2)], []);
   const r = playCard(s, { playerId: "P1", instanceId: "g", terrainIndex: 0, placement: "TOP" });
   expect(r.ok).toBe(true);
   if (r.ok) expect(r.state.players.P1.gold).toBe(2);
 });
 it("healing cannot take received damage below zero", () => {
-  const s = createGame([card("h", "HEAL", "SHIELD", 4)], []);
+  const s = createGame([card("h", "HEAL", "HEAL", 4)], []);
   const r = playCard(s, { playerId: "P1", instanceId: "h", terrainIndex: 0, placement: "TOP" });
   expect(r.ok).toBe(true);
   if (r.ok) expect(r.state.players.P1.damageReceived).toBe(0);
