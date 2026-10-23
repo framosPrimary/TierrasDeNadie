@@ -1,6 +1,6 @@
 # Tierras de Nadie — Rules
 
-> Estado: v0.5 de trabajo  
+> Estado: v0.6 — consolidación del Profe (22/10/2026); ver addenda §21–§23  
 > Fuente: video de reglas + validaciones del Director Creativo del 13/10/2026 y definiciones del 14/10/2026.  
 > Este archivo es la fuente de verdad del comportamiento jugable. Si una regla no está definida aquí, no debe inventarse en código.
 
@@ -126,8 +126,7 @@ Elimina la última carta del oponente de la misma línea de terreno en la que fu
 ### Coste 2 — Tomar carta del rival
 - pagar 2 de oro;
 - tomar 2 cartas de la mano rival;
-- elegir 1 para conservar;
-- devolver la otra al rival.
+- devolver al rival 2 cartas elegidas entre las que tiene el comprador en su mano (incluidas las recién tomadas); el rival no pierde tamaño de mano.
 
 ### Coste 2 — Curación
 - pagar 2 de oro;
@@ -143,7 +142,7 @@ Elimina la última carta del oponente de la misma línea de terreno en la que fu
 
 ### Coste 3 — Carta extra
 - pagar 3 de oro;
-- obtener una carta extra para jugar al final de la ronda.
+- robar una carta del mazo y jugarla inmediatamente, como jugada adicional (no reemplaza una de las 10 normales).
 
 **OPEN-RULE-02:** coste de 3 de oro confirmado el 14/10/2026. Sigue pendiente definir si la compra puede repetirse y cómo se ordenan las cartas extra de ambos jugadores.
 
@@ -272,3 +271,59 @@ La experiencia objetivo es **duelo 1 contra 1 online** desde dispositivos separa
 - Desempate (héroes, Mercado, cartas extra), orden de cartas extra y reglas de primer jugador.
 
 Estas dudas **no** autorizan al código a imponer coincidencia de símbolos para encadenar.
+
+
+## 21. Addenda del Profe — respuestas 01–20 (22/10/2026)
+
+Fuente primaria: cuestionario de 34 preguntas respondidas por el Profe. Sus respuestas prevalecen sobre formulaciones anteriores en conflicto.
+
+### Colocación, tapado y destrucción
+- (01) La primera carta de cada terreno se encadena obligatoriamente **por debajo** del terreno: queda habilitado solamente su **elemento inferior** y, cuando corresponda, la muralla que incluya la carta. Las cartas siguientes se encadenan respecto del elemento inferior de otra carta ya jugada.
+- (02) En los encadenamientos posteriores, el jugador decide si superpone la carta nueva por arriba o por debajo de la carta ya jugada.
+- (03) Cuando un elemento tapado se destapa por destrucción, vuelve a aportar su valor persistente. Los efectos inmediatos ya ejecutados nunca se repiten.
+- (04) Una catapulta de carta elimina la **última carta enemiga jugada en su misma línea**, sin reacomodar físicamente las demás. Los elementos destapados recuperan su vigencia.
+- (05) No hay máximo de cartas por terreno, pero cada jugador debe encadenar al menos una carta en **cada uno de los tres terrenos**.
+- (06) Murallas y arcos se acumulan por línea; las murallas defienden contra el total de arquería aplicable.
+- (07) Un arco tapado deja de participar en combos posteriores. La respuesta no explicita reversión de daño histórico: NO descontar daño ya ocurrido sin nueva decisión del Profe.
+- (08) Curación a daño cero se pierde, no se almacena.
+- (09) Los efectos se resuelven al encadenar, y luego se habilita Mercado si se activó oro.
+- (10) Si se habilitan dos elementos de activación inmediata de una carta, se ejecuta primero el de **arriba** y después el de **abajo**.
+
+### Turnos, Mercado y cierre
+- (11) El enroque puede hacerse antes o después de jugar la carta normal, sujeto al bloqueo irrevocable del suplente cuando la mano llega a tres o menos. La frase «siempre y cuando tenga 3 cartas» del cuestionario contradice esa regla preexistente y se registra para aclaración en DECISIONS.
+- (12) Mercado se cierra al pulsar **Finalizar compra**, incluso si sobra oro.
+- (13–14) La carta extra comprada (3 oro) sale del mazo, se juega inmediatamente y no consume una de las 10 jugadas normales. Varias compras producen varias jugadas adicionales inmediatas. Una activación posterior de oro puede abrir otra oportunidad de Mercado.
+- (15) Si el mazo no permite completar el robo de Mercado, se cancela esa compra; no se mezcla el descarte durante la ronda.
+- (16) El intercambio de 2 oro toma dos cartas rivales y devuelve **dos** cartas al rival desde la mano del comprador (no una).
+- (17–18) La ronda espera que ambos jugadores agoten sus cartas normales; quien terminó aguarda al otro.
+- (19) Si el desempate a cinco cartas también empata, gana quien acumule mayor cantidad de **espadas + arcos + báculos** presentes de su lado. Su valoración exacta sigue pendiente.
+- (20) Primera ronda: sorteo con moneda. Rondas 2 y 3: el jugador que está perdiendo elige quién empieza. Desempate: empieza quien perdió el sorteo original.
+
+## 22. Addenda del Profe — respuestas 21–34
+
+### Héroes
+- (21) Catálogo de 10 héroes y habilidades en JPG: **aún no recibido**.
+- (22) El héroe titular aplica sus habilidades mientras permanezca activo.
+- (23–24) Tras el enroque, el héroe retirado deja de influir. Está pendiente clasificar beneficios inmediatos irreversibles ya aplicados versus bonificaciones persistentes.
+- (25) El suplente y los héroes descartados permanecen **secretos** hasta que se revele el suplente mediante enroque; no enviar esa información al adversario en el modo online.
+- (26) Los 10 héroes son un mazo compartido; se reparten 4 a cada jugador sin duplicados.
+
+### Báculos
+- (27–28) Son efectos diversos, incluidos elementos alternativos y bonificaciones de espadas. Catálogo específico **pendiente**.
+- (29) Un báculo tapado no aplica un bonificador persistente al final de ronda.
+- (30) Los báculos admiten sinergias con héroes; ejemplo: elegir catapulta, curación u oro de un báculo, según conveniencia.
+
+### Mercado
+- (31) Puede repetirse una acción tantas veces como se quiera mientras haya oro suficiente en la oportunidad de Mercado.
+- (32) La compra de intercambio toma 2 cartas de la mano rival y devuelve 2 cartas de la mano del comprador, sin reducir la mano del rival.
+- (33) Descarte de reemplazo va al descarte común.
+- (34) Una acción comprada puede activarse incluso sin blanco; si no hay blanco, no produce ese efecto, pero **sí puede activar habilidades de héroe** (ej. Ingeniero: 4 de daño por activación de catapulta, sujeto a confirmar texto final de carta).
+
+## 23. Otras reglas confirmadas en conversación y alcance
+
+- El oro puede guardarse dentro de la ronda, no entre rondas.
+- Durante una oportunidad de Mercado se permiten compras múltiples, incluso repetidas; el jugador confirma cuándo cierra.
+- Las compras de cartas extra pueden encadenar nuevas activaciones de oro y nuevas oportunidades de Mercado. No hay límite artificial.
+- Entre rondas se reinician el oro, manos, mazo, descarte, líneas, efectos temporales y héroes; se conservan los tres terrenos y el daño acumulado.
+- El motor completo deberá separar acciones normales de jugadas extra, y registrar qué revelaciones y efectos son privados.
+- **Este documento describe decisiones de diseño, no garantiza que el código actual las cumpla.** No desplegar como reglamentario hasta cumplir criterios de ROADMAP_NEXT_VERSION.md.
