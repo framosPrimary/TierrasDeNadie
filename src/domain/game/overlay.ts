@@ -32,13 +32,19 @@ export function overlay(
   if (order !== "NEW_OVER_OLD" && order !== "OLD_OVER_NEW") throw new Error("Superposición inválida");
   const fresh = { ...card, visibility: visibilityOf(card) };
   if (chain.length === 0) {
-    const newlyEnabled = (["top", "bottom"] as const).flatMap(face =>
-      immediateElements.includes(fresh.definition[face === "top" ? "topElement" : "bottomElement"])
-        ? [{ instanceId: fresh.instanceId, face, element: fresh.definition[face === "top" ? "topElement" : "bottomElement"] }]
-        : []);
-    // Anotar que los componentes inmediatos de la primera carta ya dispararon.
-    const visibility = { top: { ...fresh.visibility.top }, bottom: { ...fresh.visibility.bottom } };
-    for (const event of newlyEnabled) visibility[event.face].activated = true;
+    // La primera carta se encadena por debajo del terreno: solo su cara inferior
+    // queda habilitada. La muralla impresa requiere modelado independiente
+    // cuando recibamos el catálogo gráfico del Profe.
+    const visibility: Visibility = {
+      top: { covered: true, activated: false },
+      bottom: { ...fresh.visibility.bottom },
+    };
+    const element = fresh.definition.bottomElement;
+    const newlyEnabled: ActiveFace[] =
+      immediateElements.includes(element)
+        ? [{ instanceId: fresh.instanceId, face: "bottom", element }]
+        : [];
+    if (newlyEnabled.length > 0) visibility.bottom.activated = true;
     return { chain: [{ ...fresh, visibility }], newlyEnabled };
   }
   const neighborIndex = placement === "TOP" ? 0 : chain.length - 1;
