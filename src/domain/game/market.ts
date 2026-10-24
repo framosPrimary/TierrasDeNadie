@@ -1,13 +1,16 @@
 import type { PlayerId } from "../types";
 import type { GameState } from "./state";
 import { updateHeroThreshold } from "./heroes";
+import { overlay, type OverlayOrder } from "./overlay";
+import { resolveImmediate } from "./immediate";
+import type { Placement } from "../types";
 
 export type MarketAction =
   | { playerId: PlayerId; kind: "HEAL_TWO" }
   | { playerId: PlayerId; kind: "CATAPULT"; terrainIndex: 0 | 1 | 2 }
   | { playerId: PlayerId; kind: "EXCHANGE"; discardId: string }
-  | { playerId: PlayerId; kind: "STEAL"; candidates: [string, string]; keepId: string }
-  | { playerId: PlayerId; kind: "EXTRA_CARD" };
+  | { playerId: PlayerId; kind: "STEAL"; candidates: [string, string]; returnIds: [string, string] }
+  | { playerId: PlayerId; kind: "EXTRA_CARD"; terrainIndex: 0 | 1 | 2; placement: Placement; overlayOrder?: OverlayOrder };
 export type MarketResult = { ok: true; state: GameState } | { ok: false; reason: string };
 
 export function buyMarket(state: GameState, action: MarketAction): MarketResult {
@@ -28,9 +31,10 @@ export function buyMarket(state: GameState, action: MarketAction): MarketResult 
     case "CATAPULT": {
       if (![0, 1, 2].includes(action.terrainIndex)) return { ok: false, reason: "Terreno inválido" };
       const enemy = state.terrains[action.terrainIndex][rival];
-      if (enemy.length === 0) return { ok: false, reason: "No hay carta rival para destruir" };
-      discard = [...discard, enemy[enemy.length - 1]];
-      terrains = state.terrains.map((line, i) => i === action.terrainIndex ? { ...line, [rival]: enemy.slice(0, -1) } : line) as GameState["terrains"];
+      if (enemy.length > 0) {
+        discard = [...discard, enemy[enemy.length - 1]];
+        terrains = state.terrains.map((line, i) => i === action.terrainIndex ? { ...line, [rival]: enemy.slice(0, -1) } : line) as GameState["terrains"];
+      }
       break;
     }
     case "EXCHANGE": {
@@ -43,24 +47,46 @@ export function buyMarket(state: GameState, action: MarketAction): MarketResult 
     }
     case "STEAL": {
       const [a, b] = action.candidates;
-      if (a === b || !action.candidates.includes(action.keepId)) return { ok: false, reason: "Elección inválida" };
-      const stolen = state.players[rival].hand.find(c => c.instanceId === action.keepId);
-      if (!stolen || !state.players[rival].hand.some(c => c.instanceId === a) || !state.players[rival].hand.some(c => c.instanceId === b))
-        return { ok: false, reason: "Cartas rivales no disponibles" };
-      players[rival].hand = state.players[rival].hand.filter(c => c.instanceId !== stolen.instanceId);
-      players[action.playerId].hand = [...player.hand, stolen];
+      const [returnA, returnB] = action.returnIds;
+      if (a === b || returnA === returnB) return { ok: false, reason: "Elección inválida" };
+      const rivalCards = state.players[rival].hand.filter(c => c.instanceId === a || c.instanceId === b);
+      if (rivalCards.length !== 2) return { ok: false, reason: "Cartas rivales no disponibles" };
+      const pool = [...player.hand, ...rivalCards];
+      const returnCards = pool.filter(c => c.instanceId === returnA || c.instanceId === returnB);
+      if (returnCards.length !== 2) return { ok: false, reason: "Devolución inválida" };
+      players[rival].hand = [...state.players[rival].hand.filter(c => c.instanceId !== a && c.instanceId !== b), ...returnCards];
+      players[action.playerId].hand = pool.filter(c => c.instanceId !== returnA && c.instanceId !== returnB);
       break;
     }
     case "EXTRA_CARD": {
       if (!deck.length) return { ok: false, reason: "Mazo agotado" };
-      players[action.playerId].extraCards = [...(player.extraCards ?? []), deck[0]];
+      if (![0, 1, 2].includes(action.terrainIndex) || !["TOP", "BOTTOM"].includes(action.placement))
+        return { ok: false, reason: "Terreno o posición inválidos" };
+      const chain = state.terrains[action.terrainIndex][action.playerId];
+      const applied = overlay(chain, deck[0], action.placement, action.overlayOrder ?? "NEW_OVER_OLD");
+      terrains = state.terrains.map((line, i) => i === action.terrainIndex
+        ? { ...line, [action.playerId]: applied.chain } : line) as GameState["terrains"];
       deck = deck.slice(1);
+      log.push(`${action.playerId}: carta extra jugada en terreno ${action.terrainIndex + 1}`);
       break;
     }
   }
   players[action.playerId].gold -= cost;
   log.push(`${action.playerId}: compra ${action.kind} (${cost} oro)`);
-  let updated = { ...state, players, deck, discard, terrains, log };
+  let updated: GameState = { ...state, players, deck, discard, terrains, log };
+  if (action.kind === "EXTRA_CARD") {
+    const placed = terrains[action.terrainIndex][action.playerId];
+    const triggerCard = placed.find(c => c.instanceId === state.deck[0].instanceId);
+    if (triggerCard) {
+      const triggers = (["top", "bottom"] as const).flatMap(face => {
+        const status = triggerCard.visibility?.[face];
+        const element = triggerCard.definition[face === "top" ? "topElement" : "bottomElement"];
+        return status?.activated && !status.covered && ["GOLD", "HEAL", "CATAPULT", "ARCHERY"].includes(element)
+          ? [{ instanceId: triggerCard.instanceId, face, element }] : [];
+      });
+      updated = resolveImmediate(updated, action.playerId, action.terrainIndex, triggers);
+    }
+  }
   updated = updateHeroThreshold(updated, rival);
   updated = updateHeroThreshold(updated, action.playerId);
   return { ok: true, state: updated };
