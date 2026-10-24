@@ -46,7 +46,7 @@ export function nextRound(state: GameState, random: () => number = Math.random):
     terrains: [{ P1: [], P2: [] }, { P1: [], P2: [] }, { P1: [], P2: [] }],
     players: {
       P1: { ...state.players.P1, hand: deal.slice(0, count), played: 0, gold: 0, marketOpen: false, extraCards: [], hero: undefined },
-      P2: { ...state.players.P2, hand: deal.slice(count, count * 2), played: 0, gold: 0 },
+      P2: { ...state.players.P2, hand: deal.slice(count, count * 2), played: 0, gold: 0, marketOpen: false, extraCards: [], hero: undefined },
     },
     log: [...state.log, `Ronda ${state.round + 1}: ${count} cartas repartidas por jugador`],
   };
