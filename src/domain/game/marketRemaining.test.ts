@@ -1,6 +1,6 @@
 import { expect, it } from "vitest";
 import { startMatch } from "./match";
-import { buyMarket } from "./market";
+import { buyMarket, closeMarket } from "./market";
 import { finishRound } from "./finishRound";
 import type { CardDefinition } from "../types";
 const definitions: CardDefinition[] = Array.from({length:50},(_,i)=>({id:String(i),name:String(i),topElement:"SWORD",bottomElement:"GOLD"}));
@@ -36,7 +36,8 @@ it("plays an extra card immediately without consuming a normal turn",()=>{
   expect(r.state.terrains[0].P1).toHaveLength(1);
   expect(r.state.players.P1.hand).toHaveLength(10);
   expect(r.state.players.P1.played).toBe(0);
-  const ready={...r.state,players:{...r.state.players,P1:{...r.state.players.P1,played:10},P2:{...r.state.players.P2,played:10}}};
+  const closed=closeMarket(r.state,"P1");
+  const ready={...closed,players:{...closed.players,P1:{...closed.players.P1,played:10},P2:{...closed.players.P2,played:10}}};
   expect(()=>finishRound(ready)).not.toThrow();
 });
 it("refuses absent rival targets without spending gold",()=>{
