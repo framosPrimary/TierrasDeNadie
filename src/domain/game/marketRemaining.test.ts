@@ -45,3 +45,36 @@ it("refuses absent rival targets without spending gold",()=>{
   const r=buyMarket(s,{playerId:"P1",kind:"STEAL",candidates:["fake","x"],returnIds:["fake","x"]});
   expect(r.ok).toBe(false); expect(s.players.P1.gold).toBe(12);
 });
+
+it("permits repeated market purchases while gold lasts", () => {
+  const s=setup(); s.players.P1.damageReceived=10;
+  const a=buyMarket(s,{playerId:"P1",kind:"HEAL_TWO"});
+  expect(a.ok).toBe(true);
+  if(!a.ok)return;
+  const b=buyMarket(a.state,{playerId:"P1",kind:"HEAL_TWO"});
+  expect(b.ok).toBe(true);
+  if(!b.ok)return;
+  expect(b.state.players.P1.gold).toBe(8);
+  expect(b.state.players.P1.damageReceived).toBe(6);
+  expect(b.state.players.P1.marketOpen).toBe(true);
+});
+it("allows hiring a catapult with no target, spending gold", () => {
+  const s=setup();
+  const r=buyMarket(s,{playerId:"P1",kind:"CATAPULT",terrainIndex:2});
+  expect(r.ok).toBe(true);
+  if(!r.ok)return;
+  expect(r.state.players.P1.gold).toBe(9);
+  expect(r.state.discard).toHaveLength(0);
+});
+it("opens market from gold on an immediately played extra card", () => {
+  const s=setup();
+  const next=s.deck[0];
+  next.definition={...next.definition,bottomElement:"GOLD",values:{GOLD:2}};
+  const r=buyMarket(s,{playerId:"P1",kind:"EXTRA_CARD",terrainIndex:0,placement:"BOTTOM"});
+  expect(r.ok).toBe(true);
+  if(!r.ok)return;
+  expect(r.state.terrains[0].P1).toHaveLength(1);
+  expect(r.state.players.P1.gold).toBe(11);
+  expect(r.state.players.P1.marketOpen).toBe(true);
+  expect(r.state.players.P1.played).toBe(0);
+});
