@@ -122,3 +122,12 @@ Completar M1 con GameState, tres líneas de terreno y acción `PLAY_CARD` valida
 - GitHub Actions run 39878135163: success en commit d0fd791; flujo incluye typecheck, test y build.
 - Auditoría: market.ts mantiene intercambio antiguo y reserva extra; match.ts presenta estado incompleto de P2 al comenzar nueva ronda. Corregir en H2/H3.
 - No se desplegó.
+
+## Desarrollo 24/10/2026 — avance H2/H3 y pipeline
+- Profe entregó `CARTAS BATALLA IA.pdf` y `CARTAS HEROES IA.pdf`, tablero y Mercado; revisión constató **45 cartas de batalla y 10 héroes**, faltan 5 cartas de batalla para mazo reglamentario de 50 (o aclaración de copias).
+- Política de assets incorporada en `docs/art/ASSET_PIPELINE.md`. Extracción individual generada como ZIP de trabajo en la conversación; **aún no se importaron imágenes binarias a GitHub ni se integraron en runtime**.
+- `market.ts`: intercambio de dos cartas rivales por dos cartas propias/de la mano del comprador; carta extra robada del mazo y encadenada inmediatamente en terreno elegido, sin consumir jugada normal; permite activación de oro adicional. Catapulta comprada sin objetivo consume oro y puede activarse. Compras repetidas conservan Mercado abierto hasta cierre explícito.
+- UI demo adaptada para seleccionar dos cartas de devolución; **sigue revelando cartas rivales en modo local, no apta para online**.
+- `match.ts`: reset de estado temporal para ambos jugadores, no solo P1.
+- Tests de compras repetidas, carta extra con oro y catapulta sin objetivo añadidos. CI verde en commit `8e863d9` (run 40099029930). Pendientes del roadmap siguen documentados: geometría de destapado, habilidades reales y reglas de desempate.
+- Sin deploy; servidor DigitalOcean intacto.
