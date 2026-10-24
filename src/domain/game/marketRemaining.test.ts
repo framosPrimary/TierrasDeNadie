@@ -20,27 +20,27 @@ it("exchanges one hand card for one shared deck card and discards the old card",
   expect(r.state.deck).toHaveLength(29);
   expect(s.players.P1.hand[0].instanceId).toBe(id);
 });
-it("takes one of two opponent cards and returns the other",()=>{
+it("takes two rival cards and returns two, preserving both hand sizes",()=>{
   const s=setup(),[a,b]=s.players.P2.hand.slice(0,2);
-  const r=buyMarket(s,{playerId:"P1",kind:"STEAL",candidates:[a.instanceId,b.instanceId],keepId:a.instanceId});
+  const r=buyMarket(s,{playerId:"P1",kind:"STEAL",candidates:[a.instanceId,b.instanceId],returnIds:[s.players.P1.hand[0].instanceId,s.players.P1.hand[1].instanceId]});
   expect(r.ok).toBe(true);
   if(!r.ok)return;
-  expect(r.state.players.P1.hand).toHaveLength(11);
-  expect(r.state.players.P2.hand).toHaveLength(9);
-  expect(r.state.players.P2.hand.some(c=>c.instanceId===b.instanceId)).toBe(true);
+  expect(r.state.players.P1.hand).toHaveLength(10);
+  expect(r.state.players.P2.hand).toHaveLength(10);
+  expect(r.state.players.P1.hand.some(c=>c.instanceId===a.instanceId)).toBe(true);
 });
-it("reserves an extra card without playing it ahead of its end-of-round phase",()=>{
-  const s=setup(),r=buyMarket(s,{playerId:"P1",kind:"EXTRA_CARD"});
+it("plays an extra card immediately without consuming a normal turn",()=>{
+  const s=setup(),r=buyMarket(s,{playerId:"P1",kind:"EXTRA_CARD",terrainIndex:0,placement:"TOP"});
   expect(r.ok).toBe(true);
   if(!r.ok)return;
-  expect(r.state.players.P1.extraCards).toHaveLength(1);
+  expect(r.state.terrains[0].P1).toHaveLength(1);
   expect(r.state.players.P1.hand).toHaveLength(10);
   expect(r.state.players.P1.played).toBe(0);
   const ready={...r.state,players:{...r.state.players,P1:{...r.state.players.P1,played:10},P2:{...r.state.players.P2,played:10}}};
-  expect(()=>finishRound(ready)).toThrow(/cartas extra pendientes/);
+  expect(()=>finishRound(ready)).not.toThrow();
 });
 it("refuses absent rival targets without spending gold",()=>{
   const s=setup();
-  const r=buyMarket(s,{playerId:"P1",kind:"STEAL",candidates:["fake","x"],keepId:"fake"});
+  const r=buyMarket(s,{playerId:"P1",kind:"STEAL",candidates:["fake","x"],returnIds:["fake","x"]});
   expect(r.ok).toBe(false); expect(s.players.P1.gold).toBe(12);
 });
