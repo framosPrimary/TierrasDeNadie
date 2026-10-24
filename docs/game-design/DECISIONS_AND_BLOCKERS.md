@@ -41,3 +41,11 @@ Fuente: cuestionario respondido por el Profe (34 respuestas, octubre 2026) y acu
 - H1-B BLOQUEANTE para destapado fiel: el modelo actual conserva bits de visibilidad por carta y al destruir una carta simplemente la extrae del array. No reconstruye qué vecino tapaba qué elemento. Para implementar destapado correcto se necesitan ejemplos visuales de una cadena con destrucción de carta interior y de la última carta. No inventar reglas espaciales ni marcar H1 completo.
 - H1-C PENDIENTE de catálogo: Q01 menciona muralla visible aun en la primera carta; el modelo actual solo registra dos caras, no representa muralla impresa como componente adicional independiente. Requiere imágenes de cartas.
 - H1-D EXISTENTE: arquería/murallas por línea y orden de activación top antes que bottom en colocaciones posteriores, pendientes de casos de prueba adicionales y catálogo.
+
+## Inventario y motor (24/10/2026)
+- **B-11 BLOQUEANTE para mazo final:** PDF batalla contiene 45 imágenes individuales (16+16+13), aunque el reglamento define mazo de 50. Confirmar 5 faltantes o regla de copias. No inventarlas.
+- **B-12 PENDIENTE:** los diez héroes sí figuran visualmente en el PDF, pero falta transcripción/validación exhaustiva de habilidades y timings especiales.
+- **B-13 PENDIENTE:** cartas de báculos incluyen efectos y símbolos que exceden el tipo ElementType actual; requieren catálogo y ejecución por habilidad específica.
+- **B-14 PENDIENTE:** la implementación UI del Mercado actualmente representa el robo rival con las primeras dos cartas rivales visibles en pruebas locales. No constituye selección secreta ni es apto para sala online.
+- **D-15 IMPLEMENTADO provisional:** H2 intercambio 2 por 2, carta extra inmediata, compra de catapulta sin objetivo. Revisar tests de regresión/CI antes de dar por cerrado el hito.
+- **D-16 IMPLEMENTADO:** P2 también reinicia héroe y estado temporal al cambiar ronda; el orden de inicio de siguientes rondas todavía es provisional.
