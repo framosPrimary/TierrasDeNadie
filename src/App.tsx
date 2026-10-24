@@ -22,7 +22,7 @@ export function App() {
   const [game, setGame] = useState<GameState>(fresh);
   const [selected, setSelected] = useState<string | null>(null);
   const [marketDiscard, setMarketDiscard] = useState("");
-  const [stealKeep, setStealKeep] = useState("");
+  const [tradeReturns, setTradeReturns] = useState<string[]>([]);
   const [terrain, setTerrain] = useState<0 | 1 | 2>(0);
   const [placement, setPlacement] = useState<Placement>("TOP");
   const [overlayOrder, setOverlayOrder] = useState<OverlayOrder>("NEW_OVER_OLD");
@@ -64,14 +64,14 @@ export function App() {
     const rival = marketPlayer === "P1" ? "P2" : "P1";
     const ids = game.players[rival].hand.slice(0, 2).map(card => card.instanceId);
     if (ids.length !== 2) return setMessage("El rival necesita dos cartas en mano.");
-    const r = buyMarket(game, { playerId: marketPlayer, kind: "STEAL", candidates: [ids[0], ids[1]], keepId: stealKeep });
+    const r = buyMarket(game, { playerId: marketPlayer, kind: "STEAL", candidates: [ids[0], ids[1]], returnIds: [tradeReturns[0], tradeReturns[1]] });
     if (r.ok) { setGame(r.state); setMessage("Carta obtenida."); }
     else setMessage(r.reason);
   }
   function buyExtra() {
     if (!marketPlayer) return;
-    const r = buyMarket(game, { playerId: marketPlayer, kind: "EXTRA_CARD" });
-    if (r.ok) { setGame(r.state); setMessage("Carta extra reservada para el final de ronda (juego pendiente de regla)."); }
+    const r = buyMarket(game, { playerId: marketPlayer, kind: "EXTRA_CARD", terrainIndex: terrain, placement, overlayOrder });
+    if (r.ok) { setGame(r.state); setMessage("Carta extra jugada inmediatamente."); }
     else setMessage(r.reason);
   }
   function closeRound() {
@@ -108,7 +108,7 @@ export function App() {
       <div className="controls"><button className={placement === "TOP" ? "active" : ""} onClick={() => setPlacement("TOP")}>Arriba</button><button className={placement === "BOTTOM" ? "active" : ""} onClick={() => setPlacement("BOTTOM")}>Abajo</button><button className={overlayOrder === "NEW_OVER_OLD" ? "active" : ""} onClick={() => setOverlayOrder("NEW_OVER_OLD")}>Nueva tapa</button><button className={overlayOrder === "OLD_OVER_NEW" ? "active" : ""} onClick={() => setOverlayOrder("OLD_OVER_NEW")}>Anterior tapa</button><button disabled={game.phase !== "PLAYING"} onClick={submit}>Jugar carta</button></div>
       <p role="status">{message}</p><div className="controls"><button disabled={game.phase !== "PLAYING" || game.players.P1.played !== totalCards || game.players.P2.played !== totalCards} onClick={closeRound}>Resolver ronda</button><button disabled={game.phase !== "ROUND_FINISHED"} onClick={advanceRound}>Siguiente ronda</button></div>
     </section>
-    {marketPlayer && <section className="actions"><h2>Mercado · {marketPlayer}</h2><p>Se habilitó al activar oro. Elegí una compra o cerrá el Mercado.</p><div className="controls"><button onClick={buyHeal}>Curar 2 (2 oro)</button><button onClick={buyCatapult}>Catapulta en terreno {terrain + 1} (3 oro)</button><label>Carta a descartar <select value={marketDiscard} onChange={e => setMarketDiscard(e.target.value)}><option value="">Elegir</option>{game.players[marketPlayer].hand.map(card => <option key={card.instanceId} value={card.instanceId}>{card.definition.name}</option>)}</select></label><button onClick={buyExchange}>Cambiar carta (1 oro)</button><label>Conservar una de las primeras dos cartas rivales <select value={stealKeep} onChange={e => setStealKeep(e.target.value)}><option value="">Elegir</option>{game.players[marketPlayer === "P1" ? "P2" : "P1"].hand.slice(0, 2).map(card => <option key={card.instanceId} value={card.instanceId}>{card.definition.name}</option>)}</select></label><button onClick={buySteal}>Tomar carta rival (2 oro)</button><button onClick={buyExtra}>Comprar carta extra (3 oro)</button><button onClick={() => setGame(closeMarket(game, marketPlayer))}>Cerrar Mercado</button></div></section>}
+    {marketPlayer && <section className="actions"><h2>Mercado · {marketPlayer}</h2><p>Se habilitó al activar oro. Elegí una compra o cerrá el Mercado.</p><div className="controls"><button onClick={buyHeal}>Curar 2 (2 oro)</button><button onClick={buyCatapult}>Catapulta en terreno {terrain + 1} (3 oro)</button><label>Carta a descartar <select value={marketDiscard} onChange={e => setMarketDiscard(e.target.value)}><option value="">Elegir</option>{game.players[marketPlayer].hand.map(card => <option key={card.instanceId} value={card.instanceId}>{card.definition.name}</option>)}</select></label><button onClick={buyExchange}>Cambiar carta (1 oro)</button><label>Devolver 2 cartas al rival (seleccionar 2) <select multiple value={tradeReturns} onChange={e => setTradeReturns(Array.from(e.target.selectedOptions).map(o => o.value))}>{[...game.players[marketPlayer].hand, ...game.players[marketPlayer === "P1" ? "P2" : "P1"].hand.slice(0, 2)].map(card => <option key={card.instanceId} value={card.instanceId}>{card.definition.name}</option>)}</select></label><button onClick={buySteal}>Tomar carta rival (2 oro)</button><button onClick={buyExtra}>Comprar carta extra (3 oro)</button><button onClick={() => setGame(closeMarket(game, marketPlayer))}>Cerrar Mercado</button></div></section>}
     <section><h2>Historial</h2><ol>{game.log.slice(-8).map((entry, i) => <li key={i}>{entry}</li>)}</ol></section>
   </main>;
 }
