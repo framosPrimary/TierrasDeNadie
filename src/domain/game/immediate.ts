@@ -29,6 +29,14 @@ export function resolveImmediate(
       case "GOLD":
         players[playerId].gold += value;
         players[playerId].marketOpen = true;
+        // Cleptan: una activación por turno normal, aunque otras cartas extra
+        // generen oro durante la misma ventana del Mercado.
+        if (players[playerId].hero?.active?.toLocaleLowerCase("es") === "cleptan"
+          && players[playerId].cleptanTriggeredAtPlay !== players[playerId].played) {
+          players[rivalId].damageReceived += 2;
+          players[playerId].cleptanTriggeredAtPlay = players[playerId].played;
+          log.push(`${playerId}: Cleptan inflige 2 de daño al activar oro`);
+        }
         log.push(`${playerId}: +${value} oro; oportunidad de Mercado (interfaz pendiente)`);
         break;
       case "HEAL":
