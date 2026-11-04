@@ -49,3 +49,20 @@ Fuente: cuestionario respondido por el Profe (34 respuestas, octubre 2026) y acu
 - **B-14 PENDIENTE:** la implementación UI del Mercado actualmente representa el robo rival con las primeras dos cartas rivales visibles en pruebas locales. No constituye selección secreta ni es apto para sala online.
 - **D-15 IMPLEMENTADO provisional:** H2 intercambio 2 por 2, carta extra inmediata, compra de catapulta sin objetivo. Revisar tests de regresión/CI antes de dar por cerrado el hito.
 - **D-16 IMPLEMENTADO:** P2 también reinicia héroe y estado temporal al cambiar ronda; el orden de inicio de siguientes rondas todavía es provisional.
+
+
+## Nuevas evidencias del Profe — 04/11/2026
+
+Fuente y casos de aceptación: `docs/game-design/PROFE_EXAMPLES_2026-11-04.md`.
+
+- **D-17 CONFIRMADO POR EJEMPLO:** primera carta bajo terreno deja espada inferior 3 y una muralla independiente; H1 debe incorporar el atributo muralla adicional a ambas caras.
+- **D-18 CONFIRMADO POR EJEMPLO:** arco 2 causa dos daños inmediatos al encadenar debajo de espada en línea sin murallas.
+- **D-19 CONFIRMADO POR EJEMPLO:** báculo de +1 espada en todas las líneas, o de +1 en líneas laterales, se aplica al cierre según su texto específico y visibilidad.
+- **D-20 CONFIRMADO POR VIDEO:** Cleptan aplica 2 daños al rival por `GOLD_ACTIVATED`, no por ejecución de `MARKET_PURCHASE`. Mantener el evento y mercado separados.
+- **D-21 CONFIRMADO POR EJEMPLO:** catapulta destruye última carta enemiga y deja las otras en posición original; no ejecuta otra vez efectos instantáneos ya consumidos.
+- **B-04 ACTUALIZADO:** ejemplos reales de cadenas e interacciones **recibidos**. Ahora queda específicamente por definir si una muralla puede estar ocluida y cómo se destapa una cara al destruir una carta interior (si fuese posible). No afirmar que toda la geometría está cerrada.
+- **B-13 ACTUALIZADO:** lámina enumera ocho tipos/descripciones de báculos; ya tenemos material funcional parcial para diseñar sistema de efectos, pero aún requiere catalogación y validación contra cada carta física.
+- **B-15 PENDIENTE:** báculo que prohíbe oro: ¿bloquea carta cuyo oro estaría tapado?
+- **B-16 PENDIENTE:** báculo descarte hasta 3 / robo 3: ¿si se descartan 1–2 siempre se roban 3? ¿qué pasa si mazo insuficiente?
+- **B-17 PENDIENTE:** confirmar si la muralla impresa defiende mientras la carta exista o puede quedar cubierta independientemente.
+- **B-18 NO BLOQUEANTE:** secuencia del video (báculo lateral y Cleptan) y diagrama de 4 turnos (báculo de todas las líneas) son distintos; implementar pruebas separadas.
