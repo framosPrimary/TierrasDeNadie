@@ -158,3 +158,12 @@ Completar M1 con GameState, tres líneas de terreno y acción `PLAY_CARD` valida
 - La interfaz es hotseat en un único dispositivo, **sin privacidad real de red**; la selección se muestra por turnos y cada jugador debe pasar el dispositivo. No se ha implementado 1v1 remoto.
 - Pendientes para calificar como partida fiel: efectos reales de nueve héroes y báculos; reglas de murallas tapadas y destapado; cartas faltantes para 50; iniciativa reglamentaria; desempate secundario; obligación efectiva de ocupar tres terrenos; catálogo y arte en runtime.
 - No hay deploy. Confirmar CI del último commit antes de reportar test verde de la tanda.
+
+## Candidata v0.7 Alpha local jugable — 04/11/2026
+- **CANDIDATA LOCAL, NO DESPLEGADA NI APROBADA**: `docs/development/PLAYABLE_ALPHA_V07.md` contiene uso, alcance provisional, limitaciones, guion de prueba humana y política de no deploy.
+- Agregada prueba integral `src/domain/game/fullMatch.test.ts`: simula 3 rondas y desempate opcional desde reparto y elección de héroes, pasando por colocaciones y fin de rondas, sin editar el estado a mano durante el flujo.
+- Iniciativa: moneda en ronda 1, jugador perdedor elige inicio de rondas siguientes; desempate lo decide perdedor de moneda. En caso de marcador empatado antes de ronda 2/3 se usa provisionalmente al perdedor de moneda.
+- `App.tsx`: pantalla de relevo, manos ocultas al pasar el dispositivo, opción de iniciativa, selecciones de héroes y cierre de Mercado antes de ceder el turno. Solo modo local.
+- Motor: evitar que queden terrenos sin haber recibido jugada al agotarse las 10/5 normales; cartas extra también cuentan como terreno visitado. Catapultas posteriores no borran historial de juego de terreno.
+- CI empaqueta el build estático como artefacto descargable `tierras-de-nadie-alpha-local` de 30 días, **sin hosting ni servidor**. Estado final se verifica en la ejecución de GitHub Actions posterior al último commit.
+- Queda pendiente test humano UI y aprobación del usuario/Profe; la etiqueta *jugable* describe una **demo de contenido ficticio**, NO la implementación completa del juego físico.
