@@ -15,9 +15,12 @@ export function startMatch(cards: readonly CardDefinition[], random: () => numbe
   if (cards.length !== 50) throw new Error("La partida requiere 50 cartas del mazo compartido");
   const instances: CardInstance[] = cards.map((definition, i) => ({ instanceId: "C" + i, definition }));
   const deal = shuffled(instances, random);
+  const initialStarter = random() < 0.5 ? "P1" : "P2";
   return {
     ...createGame(deal.slice(0, 10), deal.slice(10, 20)),
     deck: deal.slice(20),
+    currentPlayer: initialStarter,
+    coinLoser: initialStarter === "P1" ? "P2" : "P1",
     log: ["Ronda 1: 10 cartas repartidas por jugador"],
   };
 }
@@ -34,19 +37,25 @@ export function nextRound(state: GameState, random: () => number = Math.random):
   if (all.length !== 50 || new Set(all.map(c => c.instanceId)).size !== 50)
     throw new Error("Mazo inconsistente: deben existir 50 instancias únicas");
   const deal = shuffled(all, random);
+  const picker = state.round >= 3
+    ? (state.coinLoser ?? "P2")
+    : state.players.P1.damageReceived > state.players.P2.damageReceived ? "P1"
+      : state.players.P2.damageReceived > state.players.P1.damageReceived ? "P2"
+      : (state.coinLoser ?? "P2"); // Empate provisional en rondas 2/3.
   return {
     ...state,
     round: state.round + 1,
     phase: "PLAYING",
     roundCombatResolved: false,
     winner: null,
-    currentPlayer: "P1",
+    currentPlayer: picker,
+    starterPicker: picker,
     deck: deal.slice(count * 2),
     discard: [],
     terrains: [{ P1: [], P2: [] }, { P1: [], P2: [] }, { P1: [], P2: [] }],
     players: {
       P1: { ...state.players.P1, hand: deal.slice(0, count), played: 0, gold: 0, marketOpen: false, cleptanTriggeredAtPlay: undefined, extraCards: [], hero: undefined },
-      P2: { ...state.players.P2, hand: deal.slice(count, count * 2), played: 0, gold: 0, marketOpen: false, extraCards: [], hero: undefined },
+      P2: { ...state.players.P2, hand: deal.slice(count, count * 2), played: 0, gold: 0, marketOpen: false, cleptanTriggeredAtPlay: undefined, extraCards: [], hero: undefined },
     },
     log: [...state.log, `Ronda ${state.round + 1}: ${count} cartas repartidas por jugador`],
   };
