@@ -341,3 +341,5 @@ Fuente de ejemplos y distinción de secuencias: [PROFE_EXAMPLES_2026-11-04.md](P
 - Catapulta: en ejemplo con última carta enemiga destruida, las restantes conservan su posición y aportes vigentes, y no hay reactivación de efectos inmediatos.
 - Algunos báculos restringen encadenar oro en su línea, aumentan defensa de murallas frente a arcos o permiten reemplazo de mano. Su catálogo preliminar está en el documento de ejemplos y requiere especificación por carta.
 - Estos ejemplos acotan el comportamiento, pero **no resuelven** la geometría de destrucción de una carta interior ni la oclusión exacta de la muralla impresa. No asumir reglas extra.
+
+**Advertencia de consistencia (04/11/2026):** la formulación de Cleptan por activación de oro en los ejemplos del video **contradice potencialmente** el texto impreso del PDF de héroes (por compra en Mercado). El disparador definitivo está **PENDIENTE**; consultar `PROFE_EXAMPLES_2026-11-04.md` §G. No implementar una de las dos interpretaciones como definitiva.
