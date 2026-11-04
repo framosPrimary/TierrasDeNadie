@@ -67,6 +67,7 @@ export function buyMarket(state: GameState, action: MarketAction): MarketResult 
       terrains = state.terrains.map((line, i) => i === action.terrainIndex
         ? { ...line, [action.playerId]: applied.chain } : line) as GameState["terrains"];
       deck = deck.slice(1);
+      players[action.playerId].visitedTerrains = [...new Set([...(player.visitedTerrains ?? []), action.terrainIndex])];
       log.push(`${action.playerId}: carta extra jugada en terreno ${action.terrainIndex + 1}`);
       break;
     }
