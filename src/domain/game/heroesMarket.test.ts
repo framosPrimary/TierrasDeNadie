@@ -44,3 +44,8 @@ it("market catapult discards last enemy card from selected line", () => {
     expect(result.state.discard[0].instanceId).toBe("x");
   }
 });
+
+it("rejects an offer that repeats a hero across players", () => {
+  expect(() => offerHeroes(createGame([], []),
+    ["Cleptan", "A", "B", "C"], ["C", "D", "E", "F"])).toThrow();
+});
