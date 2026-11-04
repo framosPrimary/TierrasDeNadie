@@ -3,7 +3,7 @@ import type { PlayerId } from "../types";
 
 export function offerHeroes(state: GameState, p1: string[], p2: string[]): GameState {
   if (state.phase !== "PLAYING" || state.players.P1.played || state.players.P2.played) throw new Error("La selección debe ser antes de jugar");
-  if (p1.length !== 4 || p2.length !== 4 || new Set(p1).size !== 4 || new Set(p2).size !== 4) throw new Error("Se ofrecen cuatro héroes distintos");
+  if (p1.length !== 4 || p2.length !== 4 || new Set(p1).size !== 4 || new Set(p2).size !== 4 || new Set([...p1, ...p2]).size !== 8) throw new Error("Se ofrecen cuatro héroes distintos");
   const make = (offered: string[]) => ({ offered: [...offered], selected: null as [string, string] | null, initial: null as string | null, active: null as string | null, reserve: null as string | null, revealed: false, swapUsed: false, reserveSuspended: false });
   return { ...state, heroSelectionRequired: true, players: { P1: { ...state.players.P1, hero: make(p1) }, P2: { ...state.players.P2, hero: make(p2) } } };
 }
