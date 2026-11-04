@@ -132,22 +132,22 @@ export function App() {
       <p>Héroe titular P1: {game.players.P1.hero?.active} · P2: {game.players.P2.hero?.active}</p>
       <button onClick={useSwap} disabled={!game.players[player].hero || game.players[player].hero!.swapUsed || game.players[player].hero!.reserveSuspended}>Enroque de {player}</button>
     </section>}
-    <section className="board">
+    {heroesReady && <section className="board">
       {game.terrains.map((line, index) => <button key={index} className={"terrain " + (terrain === index ? "active" : "")} onClick={() => setTerrain(index as 0 | 1 | 2)}>
         <strong>Terreno {index + 1}</strong>
         <div>Rival: {line[player === "P1" ? "P2" : "P1"].map(c => <span className="played" key={c.instanceId}>{c.visibility?.top.covered ? "✕" : symbols[c.definition.topElement]} / {c.visibility?.bottom.covered ? "✕" : symbols[c.definition.bottomElement]}</span>)}</div>
         <div>Propio: {line[player].map(c => <span className="played" key={c.instanceId}>{c.visibility?.top.covered ? "✕" : symbols[c.definition.topElement]} / {c.visibility?.bottom.covered ? "✕" : symbols[c.definition.bottomElement]}</span>)}</div>
       </button>)}
-    </section>
-    <section><h2>Mano de {player} ({hand.length})</h2><div className="hand">
+    </section>}
+    {heroesReady && <section><h2>Mano de {player} ({hand.length})</h2><div className="hand">
       {hand.map(c => <button key={c.instanceId} className={"card " + (selected === c.instanceId ? "active" : "")} onClick={() => setSelected(c.instanceId)}>
         <span>{symbols[c.definition.topElement]}</span><small>{c.definition.name}</small><span>{symbols[c.definition.bottomElement]}</span>
       </button>)}
-    </div></section>
-    <section className="actions"><p>Seleccionada: {selectedCard?.definition.name ?? "ninguna"} · Terreno {terrain + 1}</p>
+    </div></section>}
+    {heroesReady && <section className="actions"><p>Seleccionada: {selectedCard?.definition.name ?? "ninguna"} · Terreno {terrain + 1}</p>
       <div className="controls"><button className={placement === "TOP" ? "active" : ""} onClick={() => setPlacement("TOP")}>Arriba</button><button className={placement === "BOTTOM" ? "active" : ""} onClick={() => setPlacement("BOTTOM")}>Abajo</button><button className={overlayOrder === "NEW_OVER_OLD" ? "active" : ""} onClick={() => setOverlayOrder("NEW_OVER_OLD")}>Nueva tapa</button><button className={overlayOrder === "OLD_OVER_NEW" ? "active" : ""} onClick={() => setOverlayOrder("OLD_OVER_NEW")}>Anterior tapa</button><button disabled={game.phase !== "PLAYING" || !heroesReady} onClick={submit}>Jugar carta</button></div>
       <p role="status">{message}</p><div className="controls"><button disabled={game.phase !== "PLAYING" || game.players.P1.played !== totalCards || game.players.P2.played !== totalCards} onClick={closeRound}>Resolver ronda</button><button disabled={game.phase !== "ROUND_FINISHED"} onClick={advanceRound}>Siguiente ronda</button></div>
-    </section>
+    </section>}
     {marketPlayer && <section className="actions"><h2>Mercado · {marketPlayer}</h2><p>Se habilitó al activar oro. Elegí una compra o cerrá el Mercado.</p><div className="controls"><button onClick={buyHeal}>Curar 2 (2 oro)</button><button onClick={buyCatapult}>Catapulta en terreno {terrain + 1} (3 oro)</button><label>Carta a descartar <select value={marketDiscard} onChange={e => setMarketDiscard(e.target.value)}><option value="">Elegir</option>{game.players[marketPlayer].hand.map(card => <option key={card.instanceId} value={card.instanceId}>{card.definition.name}</option>)}</select></label><button onClick={buyExchange}>Cambiar carta (1 oro)</button><label>Devolver 2 cartas al rival (seleccionar 2) <select multiple value={tradeReturns} onChange={e => setTradeReturns(Array.from(e.target.selectedOptions).map(o => o.value))}>{[...game.players[marketPlayer].hand, ...game.players[marketPlayer === "P1" ? "P2" : "P1"].hand.slice(0, 2)].map(card => <option key={card.instanceId} value={card.instanceId}>{card.definition.name}</option>)}</select></label><button onClick={buySteal}>Tomar carta rival (2 oro)</button><button onClick={buyExtra}>Comprar carta extra (3 oro)</button><button onClick={() => setGame(closeMarket(game, marketPlayer))}>Cerrar Mercado</button></div></section>}
     <section><h2>Historial</h2><ol>{game.log.slice(-8).map((entry, i) => <li key={i}>{entry}</li>)}</ol></section>
   </main>;
