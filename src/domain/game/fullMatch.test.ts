@@ -5,6 +5,7 @@ import { offerHeroes, chooseHeroes } from "./heroes";
 import { playCard } from "./playCard";
 import { closeMarket } from "./market";
 import { finishRound } from "./finishRound";
+import { chooseStarter } from "./initiative";
 import type { GameState } from "./state";
 
 const cards: CardDefinition[] = Array.from({ length: 50 }, (_, i) => ({
@@ -19,7 +20,7 @@ const prepare = (s: GameState): GameState => {
   let state = offerHeroes(s, roster.slice(0, 4), roster.slice(4));
   state = chooseHeroes(state, "P1", ["Cleptan", "Hero2"], "Hero2");
   state = chooseHeroes(state, "P2", ["Hero5", "Hero6"], "Hero5");
-  return state;
+  return state.starterPicker ? chooseStarter(state, state.starterPicker, "P1") : state;
 };
 const playRound = (initial: GameState): GameState => {
   let s = initial;
