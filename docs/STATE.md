@@ -131,3 +131,12 @@ Completar M1 con GameState, tres líneas de terreno y acción `PLAY_CARD` valida
 - `match.ts`: reset de estado temporal para ambos jugadores, no solo P1.
 - Tests de compras repetidas, carta extra con oro y catapulta sin objetivo añadidos. CI verde en commit `8e863d9` (run 40099029930). Pendientes del roadmap siguen documentados: geometría de destapado, habilidades reales y reglas de desempate.
 - Sin deploy; servidor DigitalOcean intacto.
+
+
+## Evidencia del Profe — 04/11/2026
+- Recibidos video de 01:35, tres láminas: encadenamiento/arquería/báculo/Mercado, catálogo explicativo de báculos, destrucción por catapulta.
+- Casos verificables transcritos a `docs/game-design/PROFE_EXAMPLES_2026-11-04.md`; actualizados `RULES.md` y `DECISIONS_AND_BLOCKERS.md`.
+- Nuevo dato esencial H1: muralla impresa puede estar activa además de la cara inferior, p. ej. espada 3 + muralla.
+- Nuevo dato para H3: Cleptan causa 2 daños al rival **por activación de oro**, antes/independientemente de la compra de Mercado.
+- H1 aún requiere modelar muro independiente y geometría de destapado; todavía **no se implementaron** estos casos como código en esta actualización.
+- Sin despliegue.
