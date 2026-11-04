@@ -343,3 +343,13 @@ Fuente de ejemplos y distinción de secuencias: [PROFE_EXAMPLES_2026-11-04.md](P
 - Estos ejemplos acotan el comportamiento, pero **no resuelven** la geometría de destrucción de una carta interior ni la oclusión exacta de la muralla impresa. No asumir reglas extra.
 
 **Advertencia de consistencia (04/11/2026):** la formulación de Cleptan por activación de oro en los ejemplos del video **contradice potencialmente** el texto impreso del PDF de héroes (por compra en Mercado). El disparador definitivo está **PENDIENTE**; consultar `PROFE_EXAMPLES_2026-11-04.md` §G. No implementar una de las dos interpretaciones como definitiva.
+
+## 25. Cleptan — definición ratificada (04/11/2026)
+
+**Regla definitiva comunicada por el usuario en nombre del Profe:** «Cleptan activa su habilidad una sola vez por turno, cada vez que se encadena una carta con oro y se activa el mercado.»
+
+- Si **Cleptan está activo** y una carta encadenada **activa oro y abre Mercado**, inflige **2 puntos de daño al adversario**.
+- El disparador es la **activación de oro / apertura de Mercado**, no el pago de una compra.
+- Se dispara como máximo **una vez por turno**: varias compras, y cartas extra que vuelvan a activar oro dentro de ese mismo turno, **no** generan nuevos daños de Cleptan.
+- Puede volver a activarse durante un turno normal posterior si se vuelven a cumplir las condiciones.
+- Esta decisión resuelve B-19 y prevalece sobre la ambigüedad del texto impreso del héroe.
