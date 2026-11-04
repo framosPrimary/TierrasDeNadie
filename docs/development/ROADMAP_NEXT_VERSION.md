@@ -58,3 +58,17 @@ Fecha: 22/10/2026. Responsable de diseño: el Profe. Base: RULES.md §21–23.
 ## Punto de control — 04/11/2026
 
 Se creó una ruta local de demo para selección de héroes y continuación de turnos cuando el rival ya terminó sus jugadas. **No confundir interfaz operable con versión reglamentaria aprobada**. La v0.7 Alpha sigue abierta: resta comprobar una partida humana completa, definir o etiquetar como provisionales iniciativa, contenido y desempate final, y cerrar las dudas de geometría y murallas. El código de demo permite ejercitar flujo y errores sin tener todavía arte final, sin despliegue a servidor.
+
+## Resultado del tramo «cerrar la demo jugable» — 04/11/2026
+
+**Candidata funcional local** creada en rama de trabajo, con prueba integral automatizada, opción de selección de héroes, handoff privado, iniciativa, Mercado, turnos y rondas. Se publica **artefacto descargable de CI**, no se despliega. Consultar `PLAYABLE_ALPHA_V07.md`.
+
+- [x] Motor permite una partida completa simulada de 3 rondas, más desempate si hace falta.
+- [x] UI local tiene flujo para seleccionar héroes, intercambiar turnos, comprar y resolver rondas.
+- [x] Tras cada turno se protege la mano con una pantalla de relevo.
+- [x] Se previene agotar jugadas sin visitar los tres terrenos.
+- [x] Compilación y test automatizado son condición del archivo descargable.
+- [ ] **Bloqueo para cerrar como versión aprobada:** dos personas deben jugar una partida real completa desde el navegador y registrar fallos.
+- [ ] Validar con Profe los elementos y habilidades finales, con especial atención a báculos, destapados y desempate secundario.
+- [ ] Reemplazar catálogo ficticio por cartas reales una vez completo el set.
+- [ ] Subir servidor SOLO ante autorización posterior del propietario; no está incluido en este hito.
