@@ -142,3 +142,10 @@ Completar M1 con GameState, tres líneas de terreno y acción `PLAY_CARD` valida
 - Sin despliegue.
 
 - Corrección documental: Cleptan aún NO está cerrado por contradicción entre la transcripción del video (oro activado) y la carta impresa (compra en Mercado). Registrado bloqueo B-19; no se implementa una habilidad hasta que el Profe lo resuelva.
+
+## Cleptan confirmado e implementado — 04/11/2026
+
+- Regla definitiva: **2 daños una vez por turno** cuando Cleptan activo activa oro de una carta encadenada y abre Mercado. Compras múltiples o carta extra con oro no multiplican el daño en el mismo turno.
+- Motor: marcador `cleptanTriggeredAtPlay` por jugador y comprobación en `resolveImmediate`; se reinicia al cambiar de ronda.
+- Se añadieron cuatro pruebas de regresión que cubren apertura sin compra, carta extra con oro, turno siguiente y héroe distinto. Verificar CI antes de considerar estable.
+- Bloqueo B-19 cerrado. No se desplegó a servidor.
