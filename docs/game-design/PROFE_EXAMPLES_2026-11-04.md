@@ -62,3 +62,11 @@ Estas descripciones deben modelarse como habilidades configurables y con selecci
 4. **Báculo de robar 3**: aclarar si se roban exactamente 3 aun descartando menos y qué ocurre con mazo insuficiente.
 5. **Báculo +1 cada línea / laterales**: confirmar si se aplica una única vez por carta al cierre, sin importar dónde esté colocada.
 6. **Daños pasados**: los ataques inmediatos ya aplicados no se revierten al tapar o destruir su fuente (compatible con regla previa, pero aquí no se ilustra reversión).
+
+## G. Contradicción entre el video y la carta original de Cleptan
+
+**IMPORTANTE: el disparador exacto queda BLOQUEADO hasta confirmación del Profe.** La transcripción del video (01:03–01:12) dice que Cleptan daña 2 «cada vez que activas una carta con oro». Sin embargo, en `CARTAS HEROES IA.pdf` (página única, fila 2, héroe Cleptan) se lee: «Cada vez que [icono de oro] una compra en el Mercado, Dañas 2 punto al Enemigo», que apunta a una **compra de Mercado** y no necesariamente a cada activación de oro. No son equivalentes: una activación puede permitir varias compras.
+
+**Pregunta al Profe:** ¿Cleptan causa 2 de daño (A) por cada activación de oro, (B) por cada compra efectivamente ejecutada en el Mercado, o (C) una sola vez por cada apertura de Mercado? ¿Qué ocurre si se abre Mercado pero no se compra nada?
+
+Mantener separados los eventos de oro y compras en el motor, pero **no cablear aún el disparador de Cleptan**.
