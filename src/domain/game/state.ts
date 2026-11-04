@@ -6,6 +6,8 @@ export type PlayerState = { id: PlayerId; hand: CardInstance[]; played: number; 
 export type TerrainLine = { P1: CardInstance[]; P2: CardInstance[] };
 export type GameState = {
   currentPlayer: PlayerId;
+  coinLoser?: PlayerId;
+  starterPicker?: PlayerId;
   players: Record<PlayerId, PlayerState>;
   terrains: [TerrainLine, TerrainLine, TerrainLine];
   log: string[];
