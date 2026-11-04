@@ -54,3 +54,7 @@ Fecha: 22/10/2026. Responsable de diseño: el Profe. Base: RULES.md §21–23.
 ## Fuera de alcance de esta versión
 - Online 1v1 por enlace, cuentas opcionales, IA estratégica, publicación Steam/Android, arte final.
 - Implementación definitiva de héroes/báculos hasta recibir imágenes y textos. Si se requieren para cierre reglamentario, se detendrá esa parte como bloqueante.
+
+## Punto de control — 04/11/2026
+
+Se creó una ruta local de demo para selección de héroes y continuación de turnos cuando el rival ya terminó sus jugadas. **No confundir interfaz operable con versión reglamentaria aprobada**. La v0.7 Alpha sigue abierta: resta comprobar una partida humana completa, definir o etiquetar como provisionales iniciativa, contenido y desempate final, y cerrar las dudas de geometría y murallas. El código de demo permite ejercitar flujo y errores sin tener todavía arte final, sin despliegue a servidor.
