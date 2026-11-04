@@ -20,6 +20,12 @@ export function lineScore(chain: readonly CardInstance[]): LineScore {
     if (face.element === "SHIELD") score.shields += value;
     if (face.element === "WALL") score.walls += value;
   }
+  // La muralla impresa es un atributo de carta, independiente de sus dos caras.
+  // Su eventual oclusión particular queda pendiente de confirmar con el Profe.
+  for (const card of chain) {
+    const walls = card.definition.printedWalls ?? 0;
+    if (Number.isFinite(walls) && walls > 0) score.walls += walls;
+  }
   return score;
 }
 export function resolveLine(line: TerrainLine): LineDamage {
