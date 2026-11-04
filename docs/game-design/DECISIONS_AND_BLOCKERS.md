@@ -66,3 +66,5 @@ Fuente y casos de aceptación: `docs/game-design/PROFE_EXAMPLES_2026-11-04.md`.
 - **B-16 PENDIENTE:** báculo descarte hasta 3 / robo 3: ¿si se descartan 1–2 siempre se roban 3? ¿qué pasa si mazo insuficiente?
 - **B-17 PENDIENTE:** confirmar si la muralla impresa defiende mientras la carta exista o puede quedar cubierta independientemente.
 - **B-18 NO BLOQUEANTE:** secuencia del video (báculo lateral y Cleptan) y diagrama de 4 turnos (báculo de todas las líneas) son distintos; implementar pruebas separadas.
+
+- **B-19 BLOQUEANTE para habilidad Cleptan:** video dice daño 2 por ACTIVACIÓN de oro, carta del PDF dice daño 2 por COMPRA en Mercado. Confirmar disparador y repetición (varias compras / Mercado abierto sin compra). Hasta entonces mantener ambas fuentes, sin codificar habilidad de Cleptan.
