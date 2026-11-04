@@ -32,7 +32,9 @@ export function playCard(state: GameState, action: PlayCardAction): PlayResult {
   const placed: GameState = {
       ...state,
       terrains,
-      currentPlayer: nextPlayer(state.currentPlayer),
+      // Si el rival ya terminó sus jugadas normales, el actual continúa.
+      currentPlayer: state.players[nextPlayer(state.currentPlayer)].played >= (state.round >= 4 ? 5 : 10)
+        ? action.playerId : nextPlayer(state.currentPlayer),
       players: {
         ...state.players,
         [action.playerId]: { ...player, played: player.played + 1, hand: player.hand.filter((c) => c.instanceId !== action.instanceId) },
