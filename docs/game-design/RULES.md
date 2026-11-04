@@ -327,3 +327,17 @@ Fuente primaria: cuestionario de 34 preguntas respondidas por el Profe. Sus resp
 - Entre rondas se reinician el oro, manos, mazo, descarte, líneas, efectos temporales y héroes; se conservan los tres terrenos y el daño acumulado.
 - El motor completo deberá separar acciones normales de jugadas extra, y registrar qué revelaciones y efectos son privados.
 - **Este documento describe decisiones de diseño, no garantiza que el código actual las cumpla.** No desplegar como reglamentario hasta cumplir criterios de ROADMAP_NEXT_VERSION.md.
+
+
+## 24. Aclaraciones visuales del Profe — 04/11/2026
+
+Fuente de ejemplos y distinción de secuencias: [PROFE_EXAMPLES_2026-11-04.md](PROFE_EXAMPLES_2026-11-04.md).
+
+- Primera carta debajo del terreno: se activa solo su elemento inferior, **más la muralla impresa**, si la posee. La muralla funciona como atributo adicional a los dos elementos en el ejemplo (espada 3 + muralla).
+- Arco 2 encadenado por debajo de la espada del ejemplo causa **2 daños inmediatos** cuando no hay murallas que lo reduzcan.
+- Báculos de fin de ronda: hay ejemplos de bonificación de **+1 espada en cada línea** y **+1 o +2 espada en los terrenos laterales**, dependiendo del báculo específico. El bonificador persistente exige que el báculo esté activo.
+- Báculos de elección inmediata: ejemplos de 2 de curación/2 de oro, y de 1 curación/1 catapulta/1 oro; sus elecciones son alternativas, no suma de todas.
+- **Cleptan**: el Profe demuestra **2 daños al enemigo cuando se activa oro**; la compra posterior en el Mercado es independiente del disparador del héroe.
+- Catapulta: en ejemplo con última carta enemiga destruida, las restantes conservan su posición y aportes vigentes, y no hay reactivación de efectos inmediatos.
+- Algunos báculos restringen encadenar oro en su línea, aumentan defensa de murallas frente a arcos o permiten reemplazo de mano. Su catálogo preliminar está en el documento de ejemplos y requiere especificación por carta.
+- Estos ejemplos acotan el comportamiento, pero **no resuelven** la geometría de destrucción de una carta interior ni la oclusión exacta de la muralla impresa. No asumir reglas extra.
