@@ -140,3 +140,5 @@ Completar M1 con GameState, tres líneas de terreno y acción `PLAY_CARD` valida
 - Nuevo dato para H3: Cleptan causa 2 daños al rival **por activación de oro**, antes/independientemente de la compra de Mercado.
 - H1 aún requiere modelar muro independiente y geometría de destapado; todavía **no se implementaron** estos casos como código en esta actualización.
 - Sin despliegue.
+
+- Corrección documental: Cleptan aún NO está cerrado por contradicción entre la transcripción del video (oro activado) y la carta impresa (compra en Mercado). Registrado bloqueo B-19; no se implementa una habilidad hasta que el Profe lo resuelva.
