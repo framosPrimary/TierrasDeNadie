@@ -68,7 +68,7 @@ export function App() {
     setGame(result.state);
     setHandoff(!result.state.players[player].marketOpen);
     setSelected(null);
-    setMessage("Carta jugada. Turno de " + result.state.currentPlayer);
+    setMessage(result.state.players[player].marketOpen ? "Carta jugada. Terminá tus compras de Mercado antes de pasar el turno." : "Carta jugada. Turno de " + result.state.currentPlayer);
   }
 
   function buyHeal() {
@@ -155,15 +155,15 @@ export function App() {
       <p>{game.starterPicker} decide quién comienza esta ronda.</p>
       <div className="controls"><button onClick={() => beginRound("P1")}>Comienza P1</button><button onClick={() => beginRound("P2")}>Comienza P2</button></div>
     </section>}
-    {heroesReady && !game.starterPicker && game.phase === "PLAYING" && <section className="actions">
+    {heroesReady && !game.starterPicker && !marketPlayer && game.phase === "PLAYING" && <section className="actions">
       <p>Héroe titular P1: {game.players.P1.hero?.active} · P2: {game.players.P2.hero?.active}</p>
       <button onClick={useSwap} disabled={!game.players[player].hero || game.players[player].hero!.swapUsed || game.players[player].hero!.reserveSuspended}>Enroque de {player}</button>
     </section>}
     {heroesReady && !game.starterPicker && <section className="board">
       {game.terrains.map((line, index) => <button key={index} className={"terrain " + (terrain === index ? "active" : "")} onClick={() => setTerrain(index as 0 | 1 | 2)}>
         <strong>Terreno {index + 1}</strong>
-        <div>Rival: {line[player === "P1" ? "P2" : "P1"].map(c => <span className="played" key={c.instanceId}>{c.visibility?.top.covered ? "✕" : symbols[c.definition.topElement]} / {c.visibility?.bottom.covered ? "✕" : symbols[c.definition.bottomElement]}</span>)}</div>
-        <div>Propio: {line[player].map(c => <span className="played" key={c.instanceId}>{c.visibility?.top.covered ? "✕" : symbols[c.definition.topElement]} / {c.visibility?.bottom.covered ? "✕" : symbols[c.definition.bottomElement]}</span>)}</div>
+        <div>Rival: {line[handOwner === "P1" ? "P2" : "P1"].map(c => <span className="played" key={c.instanceId}>{c.visibility?.top.covered ? "✕" : symbols[c.definition.topElement]} / {c.visibility?.bottom.covered ? "✕" : symbols[c.definition.bottomElement]}</span>)}</div>
+        <div>Propio: {line[handOwner].map(c => <span className="played" key={c.instanceId}>{c.visibility?.top.covered ? "✕" : symbols[c.definition.topElement]} / {c.visibility?.bottom.covered ? "✕" : symbols[c.definition.bottomElement]}</span>)}</div>
       </button>)}
     </section>}
     {heroesReady && !game.starterPicker && <section><h2>Mano de {handOwner} ({hand.length})</h2><div className="hand">
