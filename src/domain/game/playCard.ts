@@ -19,6 +19,12 @@ export function playCard(state: GameState, action: PlayCardAction): PlayResult {
   if (action.placement !== "TOP" && action.placement !== "BOTTOM") return { ok: false, reason: "Posición inválida" };
   const player = state.players[action.playerId];
   if (player.played >= (state.round >= 4 ? 5 : 10)) return { ok: false, reason: "Límite de cartas de la ronda" };
+  // La obligación de visitar los tres terrenos se refiere a jugadas realizadas,
+  // no a cartas que sobrevivan a las catapultas.
+  const visited = player.visitedTerrains ?? [];
+  const unvisitedAfter = [0, 1, 2].filter(i => i !== action.terrainIndex && !visited.includes(i)).length;
+  if ((state.round >= 4 ? 5 : 10) - player.played - 1 < unvisitedAfter)
+    return { ok: false, reason: "Tenés que encadenar al menos una carta en cada terreno" };
   const card = player.hand.find((c) => c.instanceId === action.instanceId);
   if (!card) return { ok: false, reason: "Carta no disponible en la mano" };
   const chain = state.terrains[action.terrainIndex][action.playerId];
@@ -38,7 +44,7 @@ export function playCard(state: GameState, action: PlayCardAction): PlayResult {
         ? action.playerId : nextPlayer(state.currentPlayer),
       players: {
         ...state.players,
-        [action.playerId]: { ...player, played: player.played + 1, hand: player.hand.filter((c) => c.instanceId !== action.instanceId) },
+        [action.playerId]: { ...player, played: player.played + 1, visitedTerrains: [...new Set([...visited, action.terrainIndex])], hand: player.hand.filter((c) => c.instanceId !== action.instanceId) },
       },
       log: [...state.log, `${action.playerId} jugó ${card.definition.name} en terreno ${action.terrainIndex + 1}`, ...applied.newlyEnabled.map(e => `${e.element} habilitado (${e.instanceId}:${e.face})`)],
     };
