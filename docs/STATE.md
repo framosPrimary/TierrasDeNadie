@@ -149,3 +149,12 @@ Completar M1 con GameState, tres líneas de terreno y acción `PLAY_CARD` valida
 - Motor: marcador `cleptanTriggeredAtPlay` por jugador y comprobación en `resolveImmediate`; se reinicia al cambiar de ronda.
 - Se añadieron cuatro pruebas de regresión que cubren apertura sin compra, carta extra con oro, turno siguiente y héroe distinto. Verificar CI antes de considerar estable.
 - Bloqueo B-19 cerrado. No se desplegó a servidor.
+
+## Iteración jugable local (04/11/2026, después de Cleptan)
+- `heroes.ts`: se impide repartir el mismo héroe a ambos jugadores dentro de las dos ofertas de cuatro; prueba dedicada.
+- `playCard.ts`: cuando el rival ya completó sus 10 jugadas normales (5 en desempate), el jugador que todavía juega mantiene el turno y no queda bloqueado en alternancia; prueba dedicada.
+- `App.tsx`: nueva selección local de dos héroes por jugador desde ofertas de cuatro, designación de titular, revelación tras ambas confirmaciones y control de enroque. Se repite la oferta en cada nueva ronda. Durante la selección, manos y tablero quedan ocultos.
+- El **catálogo de héroes de esta demo es de prueba**: Cleptan conserva su habilidad real implementada; los otros nueve se denominan «Héroe demo N» y no tienen habilidad todavía. El mazo actual de 50 también sigue siendo ficticio, NO el PDF definitivo.
+- La interfaz es hotseat en un único dispositivo, **sin privacidad real de red**; la selección se muestra por turnos y cada jugador debe pasar el dispositivo. No se ha implementado 1v1 remoto.
+- Pendientes para calificar como partida fiel: efectos reales de nueve héroes y báculos; reglas de murallas tapadas y destapado; cartas faltantes para 50; iniciativa reglamentaria; desempate secundario; obligación efectiva de ocupar tres terrenos; catálogo y arte en runtime.
+- No hay deploy. Confirmar CI del último commit antes de reportar test verde de la tanda.
