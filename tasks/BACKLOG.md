@@ -131,3 +131,15 @@ Documento fuente de alcance y criterios: `docs/development/ROADMAP_NEXT_VERSION.
 - [ ] Actualizar `docs/game-design/DECISIONS_AND_BLOCKERS.md` al encontrar nuevos casos.
 - [ ] No iniciar deploy sin versión aprobada; despliegue manual posterior con usuario operador.
 - [ ] Corregir deuda técnica histórica: código que reserva cartas extras para el final y Mercado que devuelve una sola carta no refleja la especificación actual.
+
+## Iteración H3 — partida local de demostración (04/11/2026)
+- [x] Unicidad de héroes entre ofertas de P1 y P2.
+- [x] Jugador que no agotó jugadas puede continuar cuando el rival ya terminó.
+- [x] Formulario local de dos héroes, titular y enroque; revelación conjunta.
+- [x] Ocultar mano y tablero durante selección local de héroes.
+- [ ] Registrar y aplicar iniciativa según sorteo/perdedor de la ronda.
+- [ ] Aplicar obligatoriedad de una carta en cada terreno, con manejo de imposibilidad por destrucción.
+- [ ] Habilidades de otros nueve héroes y báculos desde catálogo verificado.
+- [ ] Calcular segundo desempate según definición del Profe.
+- [ ] Validar partida humana completa sin intervención en el estado; seguir llamando *alpha experimental*.
+- [ ] Mantener servidor sin cambios hasta revisión/aprobación.
