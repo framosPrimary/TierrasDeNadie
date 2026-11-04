@@ -13,6 +13,7 @@ export function playCard(state: GameState, action: PlayCardAction): PlayResult {
   if (state.heroSelectionRequired && (!state.players.P1.hero?.revealed || !state.players.P2.hero?.revealed)) return { ok: false, reason: "Falta revelar héroes" };
   if (state.players.P1.marketOpen || state.players.P2.marketOpen) return { ok: false, reason: "Primero cerrá el Mercado" };
   if (state.phase !== "PLAYING") return { ok: false, reason: "La ronda no está activa" };
+  if (state.starterPicker) return { ok: false, reason: "Primero elegir quién comienza esta ronda" };
   if (action.playerId !== state.currentPlayer) return { ok: false, reason: "No es tu turno" };
   if (![0, 1, 2].includes(action.terrainIndex)) return { ok: false, reason: "Terreno inválido" };
   if (action.placement !== "TOP" && action.placement !== "BOTTOM") return { ok: false, reason: "Posición inválida" };
