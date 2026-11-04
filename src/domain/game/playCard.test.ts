@@ -51,4 +51,14 @@ describe("playCard", () => {
     if (second.ok) expect(second.state.players.P1.played).toBe(2);
   });
 
+  it("obliga a visitar los tres terrenos antes de agotar las jugadas", () => {
+    const s = createGame([card("last", "SWORD", "SWORD")], []);
+    s.players.P1.played = 9;
+    s.players.P1.visitedTerrains = [0, 1];
+    const blocked = playCard(s, { playerId: "P1", instanceId: "last", terrainIndex: 0, placement: "TOP" });
+    expect(blocked.ok).toBe(false);
+    const allowed = playCard(s, { playerId: "P1", instanceId: "last", terrainIndex: 2, placement: "TOP" });
+    expect(allowed.ok).toBe(true);
+    if (allowed.ok) expect(allowed.state.players.P1.visitedTerrains).toEqual([0, 1, 2]);
+  });
 });
