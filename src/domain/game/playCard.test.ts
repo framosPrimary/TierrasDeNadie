@@ -39,4 +39,16 @@ describe("playCard", () => {
     const second = { ...closeMarket(first.state, "P1"), currentPlayer: "P1" as const };
     expect(playCard(second, { playerId: "P1", instanceId: "b", terrainIndex: 0, placement: "TOP" }).ok).toBe(true);
   });
+  it("permite continuar al jugador que aún tiene jugadas cuando el rival terminó", () => {
+    const state = createGame([card("a", "SWORD", "SWORD"), card("b", "SWORD", "SWORD")], []);
+    state.players.P2.played = 10;
+    const first = playCard(state, { playerId: "P1", instanceId: "a", terrainIndex: 0, placement: "TOP" });
+    expect(first.ok).toBe(true);
+    if (!first.ok) return;
+    expect(first.state.currentPlayer).toBe("P1");
+    const second = playCard(first.state, { playerId: "P1", instanceId: "b", terrainIndex: 1, placement: "BOTTOM" });
+    expect(second.ok).toBe(true);
+    if (second.ok) expect(second.state.players.P1.played).toBe(2);
+  });
+
 });
