@@ -72,3 +72,11 @@ Fuente y casos de aceptación: `docs/game-design/PROFE_EXAMPLES_2026-11-04.md`.
 ## Resolución B-19 (04/11/2026)
 
 - **B-19 RESUELTO — Cleptan:** el Profe confirma **2 de daño una sola vez por turno** al encadenar carta cuyo oro se activa y habilita Mercado. **No** dispara por cada compra. La compra extra con oro durante el mismo turno no vuelve a dispararlo. Se rearmará para el turno normal siguiente. Implementación: contador de jugadas normales del jugador como marcador de turno y seguimiento de activación, con pruebas dedicadas en `src/domain/game/cleptan.test.ts`.
+
+## Cierre técnico de candidata local 04/11/2026
+- **P-01 PROVISIONAL (no bloquear demo):** cuando ronda 2/3 inicia con empate acumulado, el selector es perdedor de moneda original. No consta regla del Profe para empate previo; confirmar.
+- **P-02 PROVISIONAL:** al terminar empatado el desempate de 5 cartas la demo muestra empate, en vez de resolver suma de espadas/arcos/báculos aún indeterminada.
+- **P-03 PROVISIONAL:** catálogo de 50 cartas ficticias y nueve héroes demostrativos sin habilidad. La habilidad Cleptan sí tiene prueba de regla definitiva.
+- **P-04 PROVISIONAL:** obligación de jugar al menos una en cada línea se verifica por historial de líneas visitadas, aunque catapulta destruya la carta colocada. Si Profe exige presencia física final, revisar.
+- **QA-01 PENDIENTE para aprobación:** prueba manual completa con dos personas, en un navegador real, siguiendo `docs/development/PLAYABLE_ALPHA_V07.md`.
+- **CI-01 IMPLEMENTADO:** construir y adjuntar `dist/` como artefacto, sin despliegue automático.
