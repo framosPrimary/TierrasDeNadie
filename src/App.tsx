@@ -9,6 +9,7 @@ import { chooseStarter } from "./domain/game/initiative";
 import type { OverlayOrder } from "./domain/game/overlay";
 import type { ElementType, Placement } from "./domain/types";
 import { BattleCard, BattleChain, marks, names } from "./components/BattleCard";
+import { ChainTutorial } from "./components/ChainTutorial";
 
 const demoDeck = () => {
   const elements: ElementType[] = ["SWORD", "GOLD", "SHIELD", "ARCHERY", "WALL", "HEAL", "CATAPULT"];
@@ -148,6 +149,7 @@ export function App() {
       <div className="game-header-meta"><span>RONDA <strong>{game.round}</strong></span><span>JUGADAS <strong>{game.players.P1.played}/{totalCards} · {game.players.P2.played}/{totalCards}</strong></span><button className="secondary reset" onClick={() => {setGame(fresh());setHandoff(false);setSelected(null);setMessage("Comienza una nueva partida.");}}>↺ Reiniciar</button></div>
     </header>
     <div className="prototype-banner">PROTOTIPO DE REGLAS CON INTERFAZ VISUAL PROVISIONAL · Las cartas reales y los báculos todavía están pendientes</div>
+    <ChainTutorial/>
     {game.phase === "PLAYING" && selectionPlayer && <section className="selection-panel">
       <div><p className="overline">PREPARACIÓN</p><h2>Elegir héroes · {selectionPlayer}</h2><p>Cada jugador elige dos de cuatro héroes ofrecidos. Solo Cleptan tiene habilidad implementada en esta demo.</p></div>
       <div className="selection-fields">
