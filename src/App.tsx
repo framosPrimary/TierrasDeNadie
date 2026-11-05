@@ -162,9 +162,9 @@ export function App() {
     {heroesReady && game.starterPicker && game.phase === "PLAYING" && <section className="selection-panel"><div><h2>¿Quién comienza?</h2><p>El jugador {game.starterPicker} elige la iniciativa para esta ronda.</p></div><div className="selection-fields"><button onClick={()=>beginRound("P1")}>Empieza P1</button><button onClick={()=>beginRound("P2")}>Empieza P2</button></div></section>}
     {heroesReady && !game.starterPicker && <>
       <section className="duel-bar">
-        <div className="duelist opponent"><div className="hero-avatar">♜</div><div><small>RIVAL · {rival}</small><strong>{game.players[rival].hero?.active ?? "Sin héroe"}</strong><span>Daño recibido: {game.players[rival].damageReceived} · Mano: {game.players[rival].hand.length}</span></div></div>
+        <div className="duelist opponent"><div className="hero-avatar"><img src="/art/hero-rival.svg" alt="Retrato provisional del rival"/></div><div><small>RIVAL · {rival}</small><strong>{game.players[rival].hero?.active ?? "Sin héroe"}</strong><span>Daño recibido: {game.players[rival].damageReceived} · Mano: {game.players[rival].hand.length}</span></div></div>
         <div className="turn-banner">{game.phase === "PLAYING" ? (marketPlayer ? "MERCADO ABIERTO" : "TURNO DE "+player) : game.phase==="GAME_FINISHED" ? ("FIN · "+(game.winner??"EMPATE")):"RONDA RESUELTA"}</div>
-        <div className="duelist yours"><div className="hero-avatar">♞</div><div><small>VISTA ACTUAL · {handOwner}</small><strong>{game.players[handOwner].hero?.active ?? "Sin héroe"}</strong><span>Daño recibido: {game.players[handOwner].damageReceived} · Oro: {game.players[handOwner].gold}</span></div></div>
+        <div className="duelist yours"><div className="hero-avatar"><img src="/art/hero-player.svg" alt="Retrato provisional del jugador"/></div><div><small>VISTA ACTUAL · {handOwner}</small><strong>{game.players[handOwner].hero?.active ?? "Sin héroe"}</strong><span>Daño recibido: {game.players[handOwner].damageReceived} · Oro: {game.players[handOwner].gold}</span></div></div>
       </section>
       <section className="battle-layout">
         <div className="board-wrap">
