@@ -2,7 +2,7 @@ import { useState } from "react";
 import { overlay, visibleElements } from "../domain/game/overlay";
 import { componentValue, lineScore } from "../domain/game/combat";
 import type { CardInstance } from "../domain/game/state";
-import { BattleCard, marks, names } from "./BattleCard";
+import { BattleCard, names } from "./BattleCard";
 const sword:CardInstance = {instanceId:"GUIDE-SWORD",definition:{id:"GUIDE-SWORD",name:"Espada y muralla",topElement:"SHIELD",bottomElement:"SWORD",values:{SHIELD:2,SWORD:3},printedWalls:1}};
 const bow:CardInstance = {instanceId:"GUIDE-BOW",definition:{id:"GUIDE-BOW",name:"Arco inferior",topElement:"SWORD",bottomElement:"ARCHERY",values:{SWORD:1,ARCHERY:2}}};
 const descriptions = [
@@ -30,7 +30,7 @@ export function ChainTutorial(){
       <div className="tutorial-explanation"><h3>{step===0?"Terreno vacío":step===1?"Espada y muralla":"Espada + arco"}</h3><p>{descriptions[step]}</p>
         <div className="tutorial-stats"><span>⚔ {score.swords} espadas</span><span>▤ {score.walls} murallas</span>{step===2?<span>➶ 2 arco activado</span>:null}</div>
         <p className="overline">ELEMENTOS VISIBLES</p>
-        <div className="tutorial-elements">{visible.length?visible.map((v,i)=><span key={i}>{marks[chain.find(c=>c.definition.name===v)?.definition.bottomElement ?? "SWORD"]? "◆ ":"◆ "}{v}</span>):"Ninguno"}</div>
+        <div className="tutorial-elements">{visible.length?visible.map((v,i)=><span key={i}>◆ {v}</span>):"Ninguno"}</div>
         <p className="tutorial-warning">El arco genera daño inmediato al activarse. Los efectos ya ocurridos no vuelven a dispararse por mirar o destapar una carta.</p>
         <div className="tutorial-buttons"><button onClick={()=>setStep(Math.max(0,step-1))} disabled={step===0}>← Anterior</button><button className="primary" onClick={()=>setStep(step===2?0:step+1)}>{step===2?"↺ Repetir":"Siguiente →"}</button></div>
       </div>
