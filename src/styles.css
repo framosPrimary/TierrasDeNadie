@@ -5,3 +5,6 @@
 
 /* Tres escenarios de pixel art sobrio, separados de las cartas y de la interfaz. */
 .terrain-panel{background-color:#28333b;background-size:cover;background-position:center;position:relative;isolation:isolate}.terrain-panel:before{content:"";position:absolute;inset:0;z-index:-1;background:#101a21b7;pointer-events:none}.terrain-0{background-image:url('/art/terrain-ruins.svg')}.terrain-1{background-image:url('/art/terrain-waste.svg')}.terrain-2{background-image:url('/art/terrain-snow.svg')}.hero-avatar{overflow:hidden}.hero-avatar img{width:100%;height:100%;object-fit:cover;image-rendering:pixelated;display:block}.battle-card,.terrain-panel,.hero-avatar{image-rendering:pixelated}
+
+/* Keep the scenic layer quiet; all gameplay cards sit above the tinted backdrop. */
+.terrain-panel:before{z-index:0}.terrain-panel>.terrain-name,.terrain-panel>.battle-chain,.terrain-panel>.terrain-center{position:relative;z-index:1}
