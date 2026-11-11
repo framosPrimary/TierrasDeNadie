@@ -143,7 +143,7 @@ export function App() {
       <button className="primary" onClick={() => setHandoff(false)}>Estoy listo · mostrar partida</button>
     </div>
   </main>;
-  return <main className="pixel-app">
+  return <main className={"pixel-app view-"+handOwner.toLowerCase()} data-viewpoint={handOwner}>
     <header className="game-header">
       <div className="brand"><span className="brand-mark">✥</span><div><p className="overline">EDICIÓN DE PRUEBA · MOTOR Y ENCADENAMIENTO</p><h1>Tierras de Nadie</h1></div></div>
       <div className="game-header-meta"><span>RONDA <strong>{game.round}</strong></span><span>JUGADAS <strong>{game.players.P1.played}/{totalCards} · {game.players.P2.played}/{totalCards}</strong></span><button className="secondary reset" onClick={() => {setGame(fresh());setHandoff(false);setSelected(null);setMessage("Comienza una nueva partida.");}}>↺ Reiniciar</button></div>
@@ -163,21 +163,21 @@ export function App() {
     {heroesReady && !game.starterPicker && <>
       <section className="duel-bar">
         <div className="duelist opponent"><div className="hero-avatar"><img src="/art/hero-rival.svg" alt="Retrato provisional del rival"/></div><div><small>RIVAL · {rival}</small><strong>{game.players[rival].hero?.active ?? "Sin héroe"}</strong><span>Daño recibido: {game.players[rival].damageReceived} · Mano: {game.players[rival].hand.length}</span></div></div>
-        <div className="turn-banner">{game.phase === "PLAYING" ? (marketPlayer ? "MERCADO ABIERTO" : "TURNO DE "+player) : game.phase==="GAME_FINISHED" ? ("FIN · "+(game.winner??"EMPATE")):"RONDA RESUELTA"}</div>
+        <div className="turn-banner" aria-live="polite">{game.phase === "PLAYING" ? (marketPlayer ? "MERCADO ABIERTO" : "TURNO DE "+player) : game.phase==="GAME_FINISHED" ? ("FIN · "+(game.winner??"EMPATE")):"RONDA RESUELTA"}</div>
         <div className="duelist yours"><div className="hero-avatar"><img src="/art/hero-player.svg" alt="Retrato provisional del jugador"/></div><div><small>VISTA ACTUAL · {handOwner}</small><strong>{game.players[handOwner].hero?.active ?? "Sin héroe"}</strong><span>Daño recibido: {game.players[handOwner].damageReceived} · Oro: {game.players[handOwner].gold}</span></div></div>
       </section>
       <section className="battle-layout">
         <div className="board-wrap">
-          <div className="board-heading"><div><p className="overline">CAMPO DE BATALLA</p><h2>Tres terrenos</h2></div><p>Arriba: rival · Abajo: jugador actual<br/>Cada carta muestra sus dos elementos. <b>TAPADO</b> no aporta.</p></div>
+          <div className="board-heading"><div><p className="overline">CAMPO DE BATALLA</p><h2>Tres terrenos</h2></div><p>Vista orientada para <strong>{handOwner}</strong> · Rival arriba, cartas propias abajo.<br/>Las cartas nuevas se conectan al extremo de su cadena. <b>TAPADO</b> no aporta.</p></div>
           <div className="terrain-grid">
             {game.terrains.map((line,index)=><div key={index} className={"terrain-panel terrain-"+index+(terrain===index?" terrain-picked":"")}>
               <div className="terrain-name"><span>0{index+1}</span><strong>{terrainNames[index]}</strong></div>
-              <BattleChain chain={line[rival]} label={"Rival · "+rival}/>
+              <BattleChain chain={line[rival]} side="rival" label={"Rival · "+rival}/>
               <button className="terrain-center" type="button" aria-label={"Seleccionar terreno "+(index+1)} onClick={()=>setTerrain(index as 0|1|2)}><span>TERRENO {index+1}</span><small>{terrain===index?"✓ SELECCIONADO":"ELEGIR ESTE TERRENO"}</small></button>
-              <BattleChain chain={line[handOwner]} label={"Propio · "+handOwner}/>
+              <BattleChain chain={line[handOwner]} side="propio" label={"Propio · "+handOwner}/>
             </div>)}
           </div>
-          <p className="board-footnote">Las cartas se muestran en cadena, con la mitad superior e inferior y el estado de visibilidad calculado por el motor. La geometría exacta del destapado sigue pendiente de validación.</p>
+          <p className="board-footnote">Orientación automática: al pasar turno, el adversario queda arriba y tus cartas abajo, con símbolos legibles. Las cadenas se dibujan en el extremo correspondiente; todavía falta validar la geometría exacta del destapado.</p>
         </div>
         <aside className="game-sidebar">
           <div className="side-panel">
