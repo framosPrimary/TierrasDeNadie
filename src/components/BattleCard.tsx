@@ -30,15 +30,29 @@ export function BattleCard({card,compact=false,first=false}:{card:CardInstance;c
     {first?<div className="terrain-under-note">La primera carta queda bajo el terreno</div>:null}
   </div>;
 }
-export function BattleChain({chain,label}:{chain:readonly CardInstance[];label:string}) {
+/** La cadena es un eje físico, no una fila de fichas paralelas.
+ * En la vista del rival se invierte SOLO el orden vertical de dibujo:
+ * los textos y símbolos siempre miran al jugador que tiene el turno.
+ * El motor conserva el orden original [TOP ... BOTTOM].
+ */
+export function chainForViewer(chain:readonly CardInstance[], side:"rival"|"propio"):CardInstance[] {
+  return side==="rival" ? [...chain].reverse() : [...chain];
+}
+export function BattleChain({chain,label,side="propio"}:{chain:readonly CardInstance[];label:string;side?:"rival"|"propio"}) {
   const score=lineScore(chain);
-  return <div className="battle-chain">
+  const shown=chainForViewer(chain,side);
+  return <div className={"battle-chain chain-"+side} data-chain-side={side}>
     <div className="chain-heading"><span>{label}</span><small>⚔ {score.swords} · ⬟ {score.shields} · ▤ {score.walls}</small></div>
     {chain.length===0?<div className="empty-chain">Sin cartas</div>:
-      <div className="chain-scroll"><div className="chain-stack">
-        {chain.map((card,i)=><div key={card.instanceId} className="chain-layer" style={{zIndex:i+1}}>
-          <BattleCard card={card} compact first={i===0}/>
+      <div className="chain-scroll"><div className="chain-stack" role="list" aria-label={"Cadena de "+label}>
+        {shown.map((card,i)=><div key={card.instanceId} className="chain-layer" role="listitem"
+          data-card-id={card.instanceId} data-chain-position={i+1}
+          style={{zIndex:i+1}}>
+          <BattleCard card={card} compact first={card.instanceId===chain[0].instanceId}/>
         </div>)}
       </div></div>}
+    {chain.length>0?<div className="chain-endpoint">
+      {side==="rival"?"Extremo rival · cartas orientadas hacia vos":"Extremo propio · encadená arriba o abajo"}
+    </div>:null}
   </div>;
 }
