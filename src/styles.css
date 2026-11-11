@@ -8,3 +8,32 @@
 
 /* Keep the scenic layer quiet; all gameplay cards sit above the tinted backdrop. */
 .terrain-panel:before{z-index:0}.terrain-panel>.terrain-name,.terrain-panel>.battle-chain,.terrain-panel>.terrain-center{position:relative;z-index:1}
+
+/* 11/11: Las cartas se encadenan a la vecina, no se despliegan como una fila.
+   El terreno ocupa el centro: la primera cara superior queda debajo de él.
+   Ambos lados son legibles para quien recibe el turno; el rival se invierte
+   en orden visual pero sus textos nunca se ponen boca abajo. */
+.terrain-panel .battle-chain{display:flex;flex-direction:column;align-items:stretch;min-height:0;padding:9px 7px}
+.terrain-panel .chain-rival{justify-content:flex-end}
+.terrain-panel .chain-propio{justify-content:flex-start}
+.terrain-panel .chain-scroll{overflow-x:auto;overflow-y:visible;padding:6px 8px 11px;display:flex;justify-content:center}
+.terrain-panel .chain-stack{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;min-width:110px;max-width:100%;padding:0 5px 5px}
+.terrain-panel .chain-layer{margin:0;position:relative;filter:drop-shadow(3px 3px 0 #0a1018a9);transform:none}
+.terrain-panel .chain-layer + .chain-layer{margin-top:-30px}
+.terrain-panel .battle-card.compact{width:108px;transform:none}
+.terrain-panel .battle-card.compact .chain-face{height:44px}
+.terrain-panel .battle-card.compact .battle-card-title{min-height:25px}
+.terrain-panel .chain-layer .battle-card{box-shadow:2px 3px 0 #111b20}
+.terrain-panel .chain-endpoint{margin:3px auto 0;text-align:center;max-width:180px;color:#f0d6ab;font:700 9px/1.5 system-ui,sans-serif;letter-spacing:.03em}
+.terrain-panel .chain-rival .chain-endpoint{order:-1;margin-bottom:7px}
+.terrain-panel .chain-rival .chain-heading{order:-2}
+.terrain-panel .chain-rival .chain-scroll{order:0}
+.terrain-center{position:relative;z-index:3!important;box-shadow:0 4px 0 #10151a,0 -4px 0 #10151a}
+.view-p1 .board-wrap,.view-p2 .board-wrap{transition:border-color .18s}
+.view-p1 .board-wrap{border-color:#b5a67b}
+.view-p2 .board-wrap{border-color:#829cad}
+@media(max-width:720px){
+ .terrain-panel .chain-scroll{justify-content:flex-start}
+ .terrain-panel .chain-stack{margin:auto}
+ .terrain-panel .chain-layer + .chain-layer{margin-top:-33px}
+}
