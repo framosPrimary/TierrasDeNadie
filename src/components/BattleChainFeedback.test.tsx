@@ -22,7 +22,7 @@ describe("Feedback Profe 11/11: cadenas largas y perspectiva",()=>{
     expect(d.chain[3].visibility?.bottom.covered).toBe(false);
     expect(d.chain.every(x=>x.instanceId.startsWith("GUIDE"))).toBe(false);
     const markup=renderToStaticMarkup(createElement(BattleChain,{chain:d.chain,label:"P1",side:"propio"}));
-    expect((markup.match(/class="chain-layer"/g)??[]).toHaveLength(4);
+    expect(markup.match(/class="chain-layer"/g) ?? []).toHaveLength(4);
     expect(markup.indexOf('data-card-id="primera"')).toBeLessThan(markup.indexOf('data-card-id="segunda"'));
     expect(markup.indexOf('data-card-id="tercera"')).toBeLessThan(markup.indexOf('data-card-id="cuarta"'));
   });
