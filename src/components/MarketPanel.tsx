@@ -8,6 +8,7 @@ type MarketPanelProps = {
   terrainIndex: number;
   ownHand: CardInstance[];
   rivalHandCount: number;
+  rivalCandidates: CardInstance[];
   discardId: string;
   returnIds: string[];
   onDiscardChange: (id: string) => void;
@@ -22,7 +23,7 @@ type MarketPanelProps = {
 
 /** Presentación de Mercado para el Sprint 01. Las reglas se mantienen en buyMarket. */
 export function MarketPanel({
-  playerId, gold, terrainIndex, ownHand, rivalHandCount, discardId,
+  playerId, gold, terrainIndex, ownHand, rivalHandCount, rivalCandidates, discardId,
   returnIds, onDiscardChange, onReturnsChange, onHeal, onCatapult,
   onExtraCard, onExchange, onSteal, onClose,
 }: MarketPanelProps) {
@@ -62,7 +63,7 @@ export function MarketPanel({
         <div className="trade-heading"><div><h3>Trato con el rival</h3><p>Intercambio de dos por dos. La selección rival sigue siendo provisional.</p></div><strong>● 2</strong></div>
         <label>Elegí dos cartas para devolver
           <select aria-label="Elegí dos cartas para devolver" multiple value={returnIds} onChange={e=>onReturnsChange(Array.from(e.target.selectedOptions).map(o=>o.value).slice(0,2))}>
-            {ownHand.map(card=><option key={card.instanceId} value={card.instanceId}>{card.definition.name}</option>)}
+            {[...ownHand, ...rivalCandidates].map(card=><option key={card.instanceId} value={card.instanceId}>{card.definition.name}{rivalCandidates.some(c=>c.instanceId===card.instanceId)?" (tomada del rival)":""}</option>)}
           </select>
         </label>
         <p className="trade-counter">{returnIds.length} de 2 seleccionadas · El rival tiene {rivalHandCount} cartas</p>
