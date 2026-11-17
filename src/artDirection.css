@@ -208,3 +208,11 @@ body{background:var(--night)}
 .terrain-panel .chain-layer + .chain-layer{margin-top:-27px}
 @media(max-width:1000px){.hero-portrait{width:78px;height:91px}.duelist{gap:10px}.duelist strong{font-size:18px}}
 @media(max-width:720px){.duel-bar{grid-template-columns:1fr 1fr}.duelist{min-height:84px}.hero-portrait{width:48px;height:65px}.portrait-ribbon{font-size:5px;bottom:-4px;letter-spacing:0}.duelist strong{font-size:14px}.duelist span{font-size:9px}.terrain-grid{gap:9px;padding:8px}}
+
+/* Three illustrated terrain plates: independent SVGs, never a flattened scene. */
+.terrain-0{background-image:url('/art/stage-swamp.svg');background-position:center;background-size:cover}
+.terrain-1{background-image:url('/art/stage-ruins.svg');background-position:center;background-size:cover}
+.terrain-2{background-image:url('/art/stage-dry.svg');background-position:center;background-size:cover}
+.terrain-panel:before{background:#161a1a66}
+.terrain-panel .battle-chain{background:#17171912}
+.terrain-name{background:#dfc39a}
