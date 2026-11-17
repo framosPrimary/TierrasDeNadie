@@ -10,6 +10,7 @@ import type { OverlayOrder } from "./domain/game/overlay";
 import type { ElementType, Placement } from "./domain/types";
 import { BattleCard, BattleChain, marks, names } from "./components/BattleCard";
 import { ChainTutorial } from "./components/ChainTutorial";
+import { MarketPanel } from "./components/MarketPanel";
 
 const demoDeck = () => {
   const elements: ElementType[] = ["SWORD", "GOLD", "SHIELD", "ARCHERY", "WALL", "HEAL", "CATAPULT"];
@@ -149,7 +150,7 @@ export function App() {
       <div className="game-header-meta"><span>RONDA <strong>{game.round}</strong></span><span>JUGADAS <strong>{game.players.P1.played}/{totalCards} · {game.players.P2.played}/{totalCards}</strong></span><button className="secondary reset" onClick={() => {setGame(fresh());setHandoff(false);setSelected(null);setMessage("Comienza una nueva partida.");}}>↺ Reiniciar</button></div>
     </header>
     <div className="prototype-banner">PROTOTIPO DE REGLAS CON INTERFAZ VISUAL PROVISIONAL · Las cartas reales y los báculos todavía están pendientes</div>
-    <ChainTutorial/>
+    <details className="guide-drawer"><summary>¿Cómo funciona el encadenamiento? <span>Ver tutorial del Profe</span></summary><ChainTutorial/></details>
     {game.phase === "PLAYING" && selectionPlayer && <section className="selection-panel">
       <div><p className="overline">PREPARACIÓN</p><h2>Elegir héroes · {selectionPlayer}</h2><p>Cada jugador elige dos de cuatro héroes ofrecidos. Solo Cleptan tiene habilidad implementada en esta demo.</p></div>
       <div className="selection-fields">
@@ -194,16 +195,27 @@ export function App() {
         <div className="hand-heading"><div><p className="overline">TU MANO · {handOwner}</p><h2>Elegí una carta</h2></div><p>{hand.length} restantes · Tocá una carta para seleccionarla</p></div>
         <div className="hand">{hand.map(card=><button type="button" key={card.instanceId} aria-pressed={selected===card.instanceId} className={"hand-card"+(selected===card.instanceId?" selected":"")} onClick={()=>setSelected(card.instanceId)}><BattleCard card={card}/></button>)}</div>
         <div className="placement-desk">
+          {selectedCard && <div className="chosen-preview"><span className="overline">CARTA ELEGIDA</span><BattleCard card={selectedCard} compact/></div>}
           <div className="placement-caption"><p className="overline">ENCADENAMIENTO</p><strong>{selectedCard?selectedCard.definition.name:"Seleccioná una carta de tu mano"}</strong><small>{phases[selectedCard?2:0]}</small></div>
           <fieldset className="choice-group"><legend>Extremo de cadena</legend><button className={placement==="TOP"?"is-on":""} onClick={()=>setPlacement("TOP")}>↑ Arriba</button><button className={placement==="BOTTOM"?"is-on":""} onClick={()=>setPlacement("BOTTOM")}>↓ Abajo</button></fieldset>
           <fieldset className="choice-group"><legend>Superposición</legend><button className={overlayOrder==="NEW_OVER_OLD"?"is-on":""} onClick={()=>setOverlayOrder("NEW_OVER_OLD")}>Nueva tapa</button><button className={overlayOrder==="OLD_OVER_NEW"?"is-on":""} onClick={()=>setOverlayOrder("OLD_OVER_NEW")}>Anterior tapa</button></fieldset>
           <button className="primary play-now" disabled={!selectedCard || game.phase!=="PLAYING"} onClick={submit}>Encadenar en terreno {terrain+1}</button>
         </div>
       </section>}
-      {marketPlayer && <section className="market-area"><div><p className="overline">MERCADO · {marketPlayer}</p><h2>Gastá tu oro</h2><p>Comprá varias veces si tenés saldo. Para catapulta y carta extra se usa el terreno seleccionado ({terrain+1}).</p></div>
-        <div className="market-actions"><button onClick={buyHeal}>● 2 · Curar dos</button><button onClick={buyCatapult}>● 3 · Catapulta</button><button onClick={buyExtra}>● 3 · Carta extra inmediata</button><label>Descartar y robar · ● 1<select value={marketDiscard} onChange={e=>setMarketDiscard(e.target.value)}><option value="">Elegir carta</option>{game.players[marketPlayer].hand.map(card=><option key={card.instanceId} value={card.instanceId}>{card.definition.name}</option>)}</select><button onClick={buyExchange}>Intercambiar</button></label><label>Devolver dos cartas · ● 2<select multiple value={tradeReturns} onChange={e=>setTradeReturns(Array.from(e.target.selectedOptions).map(o=>o.value))}>{[...game.players[marketPlayer].hand,...game.players[marketPlayer==="P1"?"P2":"P1"].hand.slice(0,2)].map(card=><option key={card.instanceId} value={card.instanceId}>{card.definition.name}</option>)}</select><button onClick={buySteal}>Intercambio rival</button></label></div>
-        <button className="primary" onClick={()=>{setGame(closeMarket(game,marketPlayer));setHandoff(true);}}>Cerrar Mercado · pasar dispositivo</button>
-      </section>}
+      {marketPlayer && <MarketPanel
+        playerId={marketPlayer}
+        gold={game.players[marketPlayer].gold}
+        terrainIndex={terrain}
+        ownHand={game.players[marketPlayer].hand}
+        rivalHandCount={game.players[marketPlayer==="P1"?"P2":"P1"].hand.length}
+        discardId={marketDiscard}
+        returnIds={tradeReturns}
+        onDiscardChange={setMarketDiscard}
+        onReturnsChange={setTradeReturns}
+        onHeal={buyHeal} onCatapult={buyCatapult} onExtraCard={buyExtra}
+        onExchange={buyExchange} onSteal={buySteal}
+        onClose={()=>{setGame(closeMarket(game,marketPlayer));setHandoff(true);}}
+      />}
       {(game.phase==="ROUND_FINISHED"||game.phase==="GAME_FINISHED"||game.players.P1.played===totalCards&&game.players.P2.played===totalCards) && <section className="round-actions"><h2>{game.phase==="GAME_FINISHED"?"Partida finalizada":game.phase==="ROUND_FINISHED"?"Ronda terminada":"Los dos jugadores terminaron"}</h2>{game.phase==="PLAYING"?<button className="primary" onClick={closeRound}>Resolver combate de ronda</button>:game.phase==="ROUND_FINISHED"?<button className="primary" onClick={advanceRound}>Repartir siguiente ronda</button>:<button className="primary" onClick={()=>{setGame(fresh());setHandoff(false);}}>Nueva partida</button>}</section>}
     </>}
     <section className="game-feedback" aria-live="polite"><div className="feedback-title">REGISTRO DE ACCIONES <span>{activeTotal} cartas jugadas</span></div><p role="status">{message}</p><ol>{game.log.slice(-5).map((entry,i)=><li key={i}>{entry}</li>)}</ol></section>
