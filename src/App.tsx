@@ -208,6 +208,7 @@ export function App() {
         terrainIndex={terrain}
         ownHand={game.players[marketPlayer].hand}
         rivalHandCount={game.players[marketPlayer==="P1"?"P2":"P1"].hand.length}
+        rivalCandidates={game.players[marketPlayer==="P1"?"P2":"P1"].hand.slice(0,2)}
         discardId={marketDiscard}
         returnIds={tradeReturns}
         onDiscardChange={setMarketDiscard}
