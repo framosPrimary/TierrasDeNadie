@@ -47,3 +47,15 @@ Volver el tablero del Profe más legible y reconocible como videojuego de cartas
 **No se ha actualizado DigitalOcean.** La rama de motor continúa como referencia estable. Cuando los cambios visuales pasen revisión humana, podremos hacer PR o integrar de forma controlada. Construir con `npm install --no-package-lock && npm run typecheck && npm test && npm run build`.
 
 No llamar a esta entrega «juego visual final» ni desplegarla sin autorización del propietario.
+
+## Avance gráfico 17/11/2026 — Retratos y terrenos en runtime
+
+- Se crearon `public/art/cleptan-pilot.svg` y `public/art/matriarch-pilot.svg`: **interpretaciones vectoriales provisionales** del lenguaje grotesco/tinta/papel, para validar encuadres y proporción del retrato dentro del HUD. No son los PNG originales generados y no constituyen arte final.
+- `src/components/HeroPortrait.tsx` muestra el retrato de Cleptan únicamente cuando Cleptan es el héroe activo. Para héroes del catálogo demo sin retrato, la matriarca se utiliza explícitamente como **personaje conceptual no identificado**, con un rótulo «ARTE PILOTO» y texto alternativo que no le atribuye una habilidad o identidad.
+- `src/App.tsx` dejó de fijar retratos por lado de la pantalla; ambos retratos ahora se eligen según el héroe activo, manteniendo la perspectiva local P1/P2.
+- Tres fondos teatrales independientes, con colores apagados y figuras de pantano, ruinas y páramo seco: `public/art/stage-swamp.svg`, `stage-ruins.svg`, `stage-dry.svg`. El reglamento continúa decidiendo todo: las escenas no condicionan atributos ni jugadas.
+- `src/artDirection.css` incorpora marcos artesanales, tamaños responsive, sombras de contacto, jerarquía y un tratamiento de bajo contraste de los paisajes.
+- `src/components/HeroPortrait.test.tsx` cubre selección de Cleptan y la honestidad de los retratos conceptuales.
+- **Limitación de producción:** no fue posible recuperar/copiar los PNG originales mediante las herramientas de archivos en esta sesión. Esas imágenes permanecen como referencias creativas; la integración técnica se efectuó con SVG editables alternativos. Al disponer de los PNG/WebP finales, reemplazar las fuentes de `HeroPortrait` y revisar su peso/formato.
+
+**Sin despliegue automático ni cambios de motor.** Pendiente una inspección visual real en navegador antes de aprobar el estilo. En especial revisar espacio disponible para cadenas largas y retratos en móvil.
