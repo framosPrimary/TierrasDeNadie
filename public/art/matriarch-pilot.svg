@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 210" role="img" aria-labelledby="title">
+<title id="title">Matriarca grotesca de mirada cansada, llaves y grimorio</title>
+<rect width="180" height="210" fill="#925c63"/>
+<path d="M0 177L42 136 68 157 110 123 160 165l20-19v64H0" fill="#67494b"/>
+<g stroke="#22191c" stroke-linejoin="round" stroke-linecap="round">
+<path d="M8 210Q15 145 45 129l43 17 43-25q31 26 40 89Z" fill="#a94e4b" stroke-width="6"/>
+<path d="M43 145 68 167 94 155 136 188 122 210H31Z" fill="#d3af82" stroke-width="5"/>
+<path d="M48 72Q34 41 60 23Q93-2 123 34l12 49-17 51-49 14-34-35Z" fill="#947c79" stroke-width="6"/>
+<path d="M43 57Q44 32 67 27l40-4 22 27-4 38-16 41-31 16-25-33Z" fill="#d7a080" stroke-width="6"/>
+<path d="M52 49 47 34 70 18 95 20 111 11 125 36" fill="none" stroke="#4b3e47" stroke-width="13"/>
+<path d="M58 70q14-9 25 0m15-3q10-6 19 1" fill="none" stroke-width="6"/>
+<path d="M63 77h13m26-3h12" stroke-width="5"/>
+<path d="M65 77h3m40-3h3" stroke="#f5dfaa" stroke-width="3"/>
+<path d="M89 77l-7 30 22-2Z" fill="#c48365" stroke-width="5"/>
+<path d="M76 121q17-9 31-2l-7 11-20-1Z" fill="#33272c" stroke-width="4"/>
+<path d="M80 122v7l9-1v-7" fill="#f8d6ac" stroke-width="2"/>
+<path d="M44 75l-7 24 11 9 8-18" fill="#ba8269" stroke-width="4"/>
+<circle cx="43" cy="101" r="6" fill="none" stroke="#d8ad65" stroke-width="4"/>
+<path d="M77 30l-11-16 13-9 12 17m15 0 10-15 14 10-8 18" fill="#d0a05c" stroke-width="5"/>
+<path d="M62 22l61 3-6 16-52-1Z" fill="#c39a57" stroke-width="5"/>
+<circle cx="92" cy="31" r="4" fill="#5c3034" stroke-width="3"/>
+<path d="M104 145q9-20 22-12l14 18-18 20" fill="#d59c7a" stroke-width="5"/>
+<path d="M131 155 149 148l14 23-17 18-19-14Z" fill="#d6ae65" stroke-width="5"/>
+<path d="M146 159v32m-13-15h26" stroke-width="4"/>
+<circle cx="145" cy="156" r="6" fill="none" stroke-width="3"/>
+<path d="M24 180l59-19 28 14-51 35-32-8Z" fill="#624034" stroke-width="6"/>
+<path d="M31 180l50-17 8 10-50 18Z" fill="#a17a4e" stroke-width="3"/>
+<path d="M51 176l9 14m0-19 8 14m0-18 8 12" stroke-width="2"/>
+</g>
+<path d="M18 194l25 10m55-49 13 7m7-112 8 4m-88 55 12 5" stroke="#f2cfa0" stroke-width="3" stroke-dasharray="6 6"/>
+</svg>
