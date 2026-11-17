@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 210" role="img" aria-labelledby="title">
+<title id="title">Cleptan, ladrón caricaturesco encorvado con bolsa de monedas</title>
+<rect width="180" height="210" fill="#6a465d"/>
+<path d="M0 175L36 141 51 167 91 128 135 164 180 145v65H0" fill="#443642"/>
+<circle cx="39" cy="38" r="23" fill="#b57870"/>
+<path d="M0 63h45v4H0zm120-29h60v5h-60zM4 104h38v4H4z" fill="#322834" opacity=".7"/>
+<g stroke="#20191c" stroke-linejoin="round" stroke-linecap="round">
+<path d="M7 201Q17 151 39 124L65 136 94 124 111 178 128 210H6" fill="#ad5448" stroke-width="6"/>
+<path d="M37 157L73 169 97 146 99 203H29" fill="#9f7353" stroke-width="5"/>
+<path d="M14 179L47 142 66 165 54 207" fill="#b68360" stroke-width="4"/>
+<path d="M27 170l19 7m-18 6 18 7m39-14 20 9" stroke="#312527" stroke-width="3"/>
+<path d="M42 106L37 67 63 42 106 38 133 59 120 94 105 122 74 136 55 119Z" fill="#c78b69" stroke-width="6"/>
+<path d="M51 45Q66 11 106 16L145 37 126 51 66 55 36 73 26 63Z" fill="#7e4554" stroke-width="6"/>
+<path d="M31 55L15 69 47 67" fill="#653843" stroke-width="5"/>
+<path d="M60 46 66 25 84 31 91 23 100 27" fill="none" stroke="#d3aa76" stroke-width="4"/>
+<path d="M120 65q19-1 27 18l-13 12-21-6" fill="#c18163" stroke-width="5"/>
+<path d="M97 73l34 24-40 8Z" fill="#c88063" stroke-width="5"/>
+<path d="M50 84q13-10 24 2m20-4q11-6 20 1" fill="none" stroke-width="6"/>
+<path d="M58 90l11 0m28-1 10 0" stroke-width="5"/>
+<path d="M59 90h3m39-1h3" stroke="#f3d4a8" stroke-width="3"/>
+<path d="M71 111q11 6 24-1l-4 17-21-5Z" fill="#33272a" stroke-width="4"/>
+<path d="M78 114v9l9-1v-8" fill="#eee0b6" stroke-width="2"/>
+<path d="M57 111l-5 10m54-2 6 11M59 123l-5 10m42-6 5 9" fill="none" stroke-width="3"/>
+<path d="M100 143q19-7 30 5l3 22-27 4" fill="#ae7758" stroke-width="5"/>
+<path d="M112 169l16-4 11 17 13 14-7 14-42-2-8-20Z" fill="#be8153" stroke-width="5"/>
+<path d="M108 184l38 4m-31 7 29 2" stroke-width="3"/>
+<path d="M123 155q9-6 12-1 8-8 12-3" fill="none" stroke-width="5"/>
+<path d="M115 172l19-3 10 19-27 8Z" fill="#c9a04d" stroke-width="4"/>
+<circle cx="128" cy="182" r="5" fill="#f6c675" stroke-width="2"/>
+<path d="M130 166v-11m0 0h12" fill="none" stroke="#d9b56b" stroke-width="4"/>
+</g>
+<path d="M31 193l16 6m40-44 8 8m-61-20 8-5m68-113 12 8" stroke="#e8bb87" stroke-width="3" stroke-dasharray="7 6"/>
+</svg>
